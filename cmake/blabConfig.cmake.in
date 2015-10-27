@@ -1,0 +1,23 @@
+############################################################
+#
+#
+# Copyright (c) BioImageLab 2015
+#
+# AUTHOR:
+# Sylvain Prigent
+# 
+######################################################################
+## 
+### Commentary: 
+## 
+######################################################################
+## 
+### Change log:
+## 
+######################################################################
+
+set(blab_INCLUDE_DIRS "@blab_INCLUDE_DIR@")
+set(blab_LIBRARY_DIRS "@blab_LIBRARY_DIR@")
+set(blab_CMAKE_DIR   "@blab_CMAKE_DIR@")
+
+set(blab_USE_FILE "@blab_USE_FILE@")

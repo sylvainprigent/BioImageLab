@@ -1,0 +1,31 @@
+############################################################
+#
+#
+# Copyright (c) bioImageLab 2015
+#
+# AUTHOR:
+# Sylvain Prigent 
+# 
+######################################################################
+## 
+### Commentary: 
+## 
+######################################################################
+## 
+### Change log:
+## 
+######################################################################
+
+if(NOT BLAB_USE_FILE_INCLUDED)
+
+   set(BLAB_USE_FILE_INCLUDED 1)
+
+   include_directories(${blab_INCLUDE_DIRS})
+
+   link_directories(${blab_LIBRARY_DIRS})
+
+   set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${blab_CMAKE_DIR})
+
+   include(blabDependencies)
+   
+endif(NOT BLAB_USE_FILE_INCLUDED)

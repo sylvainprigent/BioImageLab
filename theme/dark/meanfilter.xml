@@ -1,0 +1,23 @@
+<xml>
+<tool id="blMedianfilter" name="Median Filter" version="0.1">
+    <description> Apply a median filtering on an image </description>
+
+    <command interpreter="shell">
+        C:\Users\sprigent\Documents\codes\BioImageLib\BioImageLib\build2\bin\blMedianFilter $inputImage $radius $outputImage
+    </command>
+
+    <inputs>
+        <param name="inputImage" type="data" label="Input Image file (2D, 3D)" help="Requested file type: image" format="png, jpeg, tiff" />
+        <param name="radius" type="integer" label="Filter radius" helpurl="meanfilter.html#WindowSize" help="Field type: positive integer" value="5" />
+    </inputs>
+
+    <outputs>
+        <data name="outputImage" label="Filtered image" format="tiff" ></data>
+    </outputs>
+
+    <help url="meanfilter.html">
+        Filter that smooth an image. It replace each pixel of the image by the median intensity of the neighbouring pixels. The size of the 
+        neighbourhood is defined by the parameter "Filter radius"		
+    </help>
+</tool>
+</xml>
