@@ -1,6 +1,6 @@
 #include "blHomeSettingsView.h"
 
-blHomeSettingsView::blHomeSettingsView(blHomeSettings settings, QWidget *parent)
+blHomeSettingsView::blHomeSettingsView(blSettings settings, QWidget *parent)
     :QWidget(parent){
 
     m_settings = settings;
@@ -40,9 +40,9 @@ void blHomeSettingsView::setTitleVisible(bool value){
     m_titleLabel->setVisible(value);
 }
 
-blHomeSettings blHomeSettingsView::settings(){
+blSettings blHomeSettingsView::settings(){
 
-    blHomeSettings settings;
+    blSettings settings;
     for (int i = m_layout->count()-1 ; i >= 0 ; i--){
         QLayoutItem* item = m_layout->itemAt(i);
         QWidget *w = item->widget();

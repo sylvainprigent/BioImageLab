@@ -1,11 +1,13 @@
 #include "blToolDefaultWidget.h"
 #include "../view/blToolHistoryWidget.h"
 
-blToolDefaultWidget::blToolDefaultWidget(blToolInfo* toolInfo, QString historyUrl, QString viewersDir, QWidget *parent) : QWidget(parent)
+blToolDefaultWidget::blToolDefaultWidget(blToolInfo* toolInfo, QString historyUrl, QString viewersDir, QString binariesDir, QWidget *parent) : QWidget(parent)
 {
     m_toolInfo = toolInfo;
+    //m_toolInfo->print();
     m_historyDir = historyUrl;
     m_viewersDir = viewersDir;
+    m_binariesDir = binariesDir;
 
     QHBoxLayout *layout = new QHBoxLayout(this);
     layout->setContentsMargins(0,0,0,0);
@@ -20,13 +22,20 @@ blToolDefaultWidget::blToolDefaultWidget(blToolInfo* toolInfo, QString historyUr
     this->setLayout(layout);
 
     // connections
+    connect(m_execWidget, SIGNAL(changeOutputDir(QString)),
+            m_toolExec, SLOT(setOutputDir(QString)));
+
     connect(m_execWidget, SIGNAL(run(blToolInfo*,blioDataInfo*,blioParameters*)),
             m_toolExec, SLOT(run(blToolInfo*,blioDataInfo*,blioParameters*)));
+    connect(m_toolExec, SIGNAL(progressOutput(int, QString, blioDataInfo*, blioDataInfo*, blioParameters*, blToolInfo*)),
+            m_execWidget, SLOT(saveOutputMetaData(int, QString, blioDataInfo*, blioDataInfo*, blioParameters*, blToolInfo*)));
+    connect(m_toolExec, SIGNAL(processFinished(int, QString)),
+            m_execWidget, SLOT(progressFinished(int, QString)));
     connect(m_toolExec, SIGNAL(processHasFinished()),
             m_execWidget, SLOT(processHasFinished()));
     connect(m_execWidget, SIGNAL(help(QString)), m_docWidget, SLOT(loadPage(QString)));
     connect(m_toolExec, SIGNAL(progress(int)), m_execWidget, SLOT(setProgress(int)));
-    connect(m_toolExec, SIGNAL(processHasFinished(QString, QString)), m_historyBar, SLOT(addHistory(QString, QString)));
+    connect(m_execWidget, SIGNAL(processHasFinished(QString, QString)), m_historyBar, SLOT(addHistory(QString, QString)));
     connect(m_toolExec, SIGNAL(processVerbose(QString)), m_execWidget, SLOT(updateOutput(QString)));
     connect(m_toolExec, SIGNAL(processError(QString)), m_execWidget, SLOT(updateError(QString)));
     connect(m_historyBar, SIGNAL(deleteHistory(QString)), m_history, SLOT(deleteHistory(QString)));
@@ -39,6 +48,7 @@ QWidget* blToolDefaultWidget::createExecArea(){
     // model
     m_toolExec = new blToolExec();
     m_toolExec->setOutputDir(m_historyDir);
+    m_toolExec->setBinariesDir(m_binariesDir);
 
     // view
     m_execWidget = new blToolExecGui(m_toolInfo);
@@ -76,6 +86,7 @@ QWidget* blToolDefaultWidget::createHistoryArea(){
 
     // initialize the tool viewer exec model
     m_toolExecViewer = new blToolExecViewer(m_viewersDir);
+    m_toolExecViewer->setBinariesDir(m_binariesDir);
     connect(m_toolExecViewer, SIGNAL(error(QString)), this, SLOT(showViewerExecError(QString)));
 
     return m_historyBar;

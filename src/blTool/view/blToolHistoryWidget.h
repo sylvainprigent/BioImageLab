@@ -3,7 +3,7 @@
 
 #include <QtWidgets>
 
-#include "../model/blToolExecLog.h"
+#include "blToolCore/model/blToolExecLog.h"
 #include "blToolExport.h"
 
 class BLTOOL_EXPORT blToolHistoryWidget : public QWidget

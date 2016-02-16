@@ -1,6 +1,8 @@
 #include "blToolInputSelectorWidget.h"
 
-#include "blToolInputWidget.h"
+#include "blToolInputSelectorWidgetFile.h"
+#include "blToolInputSelectorWidgetDir.h"
+#include "blToolIOPluginInterface.h"
 
 blToolInputSelectorWidget::blToolInputSelectorWidget(blToolIO toolIO,QWidget *parent)
     :QWidget(parent){
@@ -13,108 +15,58 @@ blToolInputSelectorWidget::blToolInputSelectorWidget(blToolIO toolIO,QWidget *pa
     layout->addWidget(m_tabWidget);
 
     // add the file tab
-    QWidget *fileTab = new QWidget(this);
-    QGridLayout *fileLayout = new QGridLayout;
-    fileLayout->setContentsMargins(0,0,0,0);
-    fileTab->setLayout(fileLayout);
-    for(unsigned int i = 0 ; i < toolIO.inputsCount() ; ++i){
-
-        QLabel *title = new QLabel(toolIO.inputNameAt(i), this);
-        blToolInputBrowser *browser = new blToolInputBrowser(this);
-        browser->setDatatype(toolIO.inputTypeAt(i));
-        browser->setKey(toolIO.inputNameAt(i));
-        browser->setHelpButtonVisible(false);
-        fileLayout->addWidget(title, i, 0);
-        fileLayout->addWidget(browser, i, 1);
-    }
+    blToolInputSelectorWidgetFile *fileTab = new blToolInputSelectorWidgetFile(toolIO, this);
+    connect(fileTab, SIGNAL(progressHasFinished(QString,QString)), this, SIGNAL(progressHasFinished(QString,QString)));
     m_tabWidget->addTab(fileTab, tr("File"));
 
     // add the directory tab
-    QWidget *dirTab = new QWidget(this);
-    QGridLayout *dirLayout = new QGridLayout;
-    dirLayout->setContentsMargins(0,0,0,0);
-    dirTab->setLayout(dirLayout);
-    for(unsigned int i = 0 ; i < toolIO.inputsCount() ; ++i){
-
-        QLabel *title = new QLabel(toolIO.inputNameAt(i), this);
-        blToolInputBrowser *browser = new blToolInputBrowser(this, true);
-        browser->setDatatype(toolIO.inputTypeAt(i));
-        browser->setKey(toolIO.inputNameAt(i));
-        browser->setHelpButtonVisible(false);
-        dirLayout->addWidget(title, i, 0);
-        dirLayout->addWidget(browser, i, 1);
-    }
+    blToolInputSelectorWidgetDir *dirTab = new blToolInputSelectorWidgetDir(toolIO, this);
+    connect(dirTab, SIGNAL(progressHasFinished(QString,QString)), this, SIGNAL(progressHasFinished(QString,QString)));
     m_tabWidget->addTab(dirTab, tr("Directory"));
+
+    // add the plugin tabs
+    QDir pluginsDir = QDir(qApp->applicationDirPath());
+    foreach (QString fileName, pluginsDir.entryList(QDir::Files)) {
+        QPluginLoader loader(pluginsDir.absoluteFilePath(fileName));
+        QObject *plugin = loader.instance();
+        if (plugin) {
+            blToolIOPluginInterface* pluginc = qobject_cast<blToolIOPluginInterface*>(plugin);
+            if (pluginc){
+
+                blToolInputSelectorWidgetInterface* plugW = pluginc->selectorWidget(toolIO, this);
+                connect(plugW, SIGNAL(progressHasFinished(QString, QString)), this, SIGNAL(progressHasFinished(QString,QString)));
+                connect(plugW, SIGNAL(changeOutputDir(QString)), this, SIGNAL(changeOutputDir(QString)));
+                m_tabWidget->addTab(plugW, pluginc->name());
+            }
+        }
+    }
 }
 
 blioDataInfo *blToolInputSelectorWidget::getData(){
 
-    blioDataInfo * io = new blioDataInfo;
-
-    // get the files
-    if (m_tabWidget->currentIndex() == 0){
-        QLayout *layout = m_tabWidget->currentWidget()->layout();
-        blioDataList dataList;
-        for (int i = 0; i < layout->count(); ++i) {
-            QWidget *w = layout->itemAt(i)->widget();
-            blToolInputWidget* wt = qobject_cast<blToolInputWidget*>(w);
-            if(wt != NULL){
-                dataList.add(wt->datatype(), wt->key(), wt->value());
-            }
-        }
-        io->add(dataList);
-        return io;
+    QWidget* w = m_tabWidget->currentWidget();
+    blToolInputSelectorWidgetInterface* wt = qobject_cast<blToolInputSelectorWidgetInterface*>(w);
+    if(wt != NULL){
+        return wt->getData();
     }
-    // get the files from directories
-    else if(m_tabWidget->currentIndex() == 1){
-        QLayout *layout = m_tabWidget->currentWidget()->layout();
-        // 1- get the list of the directories
-        QStringList dataTypes;
-        QStringList keys;
-        QStringList values;
-        for (int i = 0; i < layout->count(); ++i) {
-            QWidget *w = layout->itemAt(i)->widget();
-            blToolInputWidget* wt = qobject_cast<blToolInputWidget*>(w);
-            if(wt != NULL){
-                dataTypes.append(wt->datatype());
-                keys.append(wt->key());
-                values.append(wt->value());
-            }
-        }
-
-        if (values.count() > 0){
-            // Check that all the directories have the same number of files
-            QList<int> filesNum;
-            QList<QFileInfoList> fLists;
-            for (int i = 0 ; i < values.count() ; i++){
-                QDir directory = QDir(values[i]);
-                QFileInfoList fList = directory.entryInfoList(QDir::Files, QDir::Name);
-                fLists.append(fList);
-                filesNum.append(fList.count());
-            }
-            int num = filesNum[0];
-            for (int i = 1 ; i < values.count() ; i++){
-                if (filesNum[i] != num){
-                    emit error(tr("The input folders does not have the same number of files !"));
-                    return io;
-                }
-            }
-            // add ios
-            for(int f = 0 ; f < num ; ++f ){
-                blioDataList dataList;
-                for (int i = 0 ; i < values.count() ; i++){
-                    dataList.add(dataTypes[i], keys[i], fLists[i].at(f).absoluteFilePath());
-                }
-                io->add(dataList);
-            }
-            io->print();
-            return io;
-        }
-        else{
-            emit error(tr("There are no input widget !"));
-            return io;
-        }
-        return io;
-    }
-    return io;
+    return new blioDataInfo();
 }
+
+void blToolInputSelectorWidget::saveOutputMetaData(int processId, QString outputDir, blioDataInfo* inputs, blioDataInfo* outputs,
+                                                   blioParameters* params, blToolInfo* toolinfo){
+
+    QWidget* w = m_tabWidget->currentWidget();
+    blToolInputSelectorWidgetInterface* wt = qobject_cast<blToolInputSelectorWidgetInterface*>(w);
+    if(wt != NULL){
+        return wt->saveOutputMetaData(processId, outputDir, inputs, outputs, params, toolinfo);
+    }
+}
+
+void blToolInputSelectorWidget::progressFinished(int processId, QString toolName){
+    QWidget* w = m_tabWidget->currentWidget();
+    blToolInputSelectorWidgetInterface* wt = qobject_cast<blToolInputSelectorWidgetInterface*>(w);
+    if(wt != NULL){
+      wt->progressFinished(processId, toolName);
+    }
+}
+

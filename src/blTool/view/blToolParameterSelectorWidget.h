@@ -2,8 +2,8 @@
 #define BLTOOLPARAMETERSELECTORWIDGET_H
 
 #include <QtWidgets>
-#include "../model/blToolParameters.h"
-#include "../model/blioParameters.h"
+#include "blToolCore/model/blToolParameters.h"
+#include "blToolCore/model/blioParameters.h"
 #include "../View/blToolInputWidget.h"
 #include "blToolExport.h"
 

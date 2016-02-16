@@ -8,7 +8,7 @@
 
 #pragma once
 
-#include "blSingleton.h"
+#include "blCore/blSingleton.h"
 #include "blFinderDatabase.h"
 
 /// \class blFinderAccess

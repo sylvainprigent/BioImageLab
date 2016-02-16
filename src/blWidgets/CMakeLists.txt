@@ -24,6 +24,16 @@ SET(HEADERS_FILES
   blFlowLayout.h
   blSlidingStackedWidget.h
   blClosableButton.h
+  blWebBrowser.h
+  blClickableIcon.h
+  blBrowseBarWidget.h
+  blTwoSideWidget.h
+  blTwoSideLeftContainer.h
+  blTwoSideRightContainer.h
+  blTwoSidedContainer.h
+  blImageView.h
+  blHoverWidget.h
+  blHoverableWidget.h
 )
 
 SET(SRCS_FILES
@@ -36,6 +46,16 @@ SET(SRCS_FILES
   blFlowLayout.cpp
   blSlidingStackedWidget.cpp
   blClosableButton.cpp
+  blWebBrowser.cpp
+  blClickableIcon.cpp
+  blBrowseBarWidget.cpp
+  blTwoSideWidget.cpp
+  blTwoSideLeftContainer.cpp
+  blTwoSideRightContainer.cpp
+  blTwoSidedContainer.cpp
+  blImageView.cpp
+  blHoverWidget.cpp
+  blHoverableWidget.cpp
 )
 
 ## #################################################################
@@ -44,7 +64,7 @@ SET(SRCS_FILES
 add_library(${PROJECT_NAME} ${SRCS_FILES} ${HEADERS_FILES})
 set_target_properties(${PROJECT_NAME} PROPERTIES LINKER_LANGUAGE CXX)
 
-target_link_libraries( ${PROJECT_NAME} Qt5::Widgets Qt5::Xml)
+target_link_libraries( ${PROJECT_NAME} Qt5::Widgets Qt5::Xml Qt5::WebKitWidgets)
 
 ## #################################################################
 ## Export header file

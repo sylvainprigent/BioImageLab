@@ -2,7 +2,7 @@
 #include "../../blWidgets/blHideableWidget.h"
 #include "blHomeSettingsView.h"
 
-blHomeSettingsGroupView::blHomeSettingsGroupView(blHomeSettingsGroups settings, QWidget *parent)
+blHomeSettingsGroupView::blHomeSettingsGroupView(blSettingsGroups settings, QWidget *parent)
     : QWidget(parent){
 
     m_settings = settings;
@@ -29,7 +29,7 @@ blHomeSettingsGroupView::blHomeSettingsGroupView(blHomeSettingsGroups settings, 
 
 void blHomeSettingsGroupView::emitSave(){
 
-    blHomeSettingsGroups settings;
+    blSettingsGroups settings;
     for(int i = 0 ; i < m_settingWidgets.count() ; ++i){
         settings.add(m_settingWidgets[i]->title(),m_settingWidgets[i]->settings());
     }

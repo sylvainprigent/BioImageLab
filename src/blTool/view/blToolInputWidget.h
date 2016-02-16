@@ -47,7 +47,7 @@ protected:
 // ///////////////////////////////////////////////// //
 //                blToolInputValue
 // ///////////////////////////////////////////////// //
-class blToolInputValue : public blToolInputWidget{
+class BLTOOL_EXPORT blToolInputValue : public blToolInputWidget{
 
     Q_OBJECT
 public:
@@ -66,7 +66,7 @@ private:
 // ///////////////////////////////////////////////// //
 //                blToolInputSelect
 // ///////////////////////////////////////////////// //
-class blToolInputSelect : public blToolInputWidget{
+class BLTOOL_EXPORT blToolInputSelect : public blToolInputWidget{
 
     Q_OBJECT
 public:
@@ -91,7 +91,7 @@ private:
 // ///////////////////////////////////////////////// //
 //                blToolInputBrowser
 // ///////////////////////////////////////////////// //
-class blToolInputBrowser : public blToolInputWidget{
+class BLTOOL_EXPORT blToolInputBrowser : public blToolInputWidget{
 
     Q_OBJECT
 public:

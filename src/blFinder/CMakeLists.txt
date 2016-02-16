@@ -48,7 +48,6 @@ SET(HEADERS_FILES
     model/blFinderSectionsLinkInfo.h
     model/blFinderTutorialsLinkInfo.h
     model/blFinderTutorialInfo.h
-    model/blSingleton.h
     controller/blFinderDefaultWidget.h
     controller/blFinderAdminDefaultWidget.h
 )

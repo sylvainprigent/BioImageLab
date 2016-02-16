@@ -38,7 +38,7 @@ void blHomeDefaultWidget::addHomeButton(){
     m_bar->addButton(buttonIcon, "Home", 0, false);
     blHomeWidget *home = new blHomeWidget(this);
     home->addSection("Applications");
-    blHomeTileInfo infoSettings("blHomeSettings", "Settings", "settings", m_iconsDir + QDir::separator() + "settings.png");
+    blHomeTileInfo infoSettings("blSettings", "Settings", "settings", m_iconsDir + QDir::separator() + "settings.png");
     home->addTile("Applications", infoSettings);
     m_centralWidget->addWidget(home);
     m_bar->setButtonChecked(0, false);
@@ -102,7 +102,7 @@ void blHomeDefaultWidget::setIconsDir(QString url){
 blHomeSettingsGroupView * blHomeDefaultWidget::loadSettings(){
 
     QFile file(m_settingsUrl);
-    blHomeSettingsGroups groups;
+    blSettingsGroups groups;
     if (!file.exists()){
 
         // finder:
@@ -119,11 +119,11 @@ blHomeSettingsGroupView * blHomeDefaultWidget::loadSettings(){
         groups.load(m_settingsUrl);
     }
     blHomeSettingsGroupView *view = new blHomeSettingsGroupView(groups, this);
-    connect(view, SIGNAL(save(blHomeSettingsGroups)), this, SLOT(saveSettings(blHomeSettingsGroups)));
+    connect(view, SIGNAL(save(blSettingsGroups)), this, SLOT(saveSettings(blSettingsGroups)));
     return view;
 }
 
-void blHomeDefaultWidget::saveSettings(blHomeSettingsGroups settings){
+void blHomeDefaultWidget::saveSettings(blSettingsGroups settings){
     settings.print();
     settings.save(m_settingsUrl);
     QMessageBox::information(this, tr("Save settings"), "Settings have been saved !");

@@ -1,6 +1,7 @@
 #include "bioseController.h"
 
 #include <blFinder>
+#include <blToolCore>
 #include <blTool>
 
 bioseController::bioseController(QString settingsUrl, QString iconsDir, QWidget *parent) : QWidget(parent)
@@ -26,11 +27,17 @@ bioseController::bioseController(QString settingsUrl, QString iconsDir, QWidget 
 
     this->addHomeButton();
     m_settingIndex = -1;
+    m_communityIndex = -1;
 
     // connections
     connect(m_bar, SIGNAL(open(int)), this, SLOT(showTab(int)));
     connect(m_bar, SIGNAL(close(int)), this, SLOT(closeTab(int)));
 
+}
+
+
+void bioseController::setHubZeroUrl(QString hubZeroUrl){
+    m_hubZeroUrl = hubZeroUrl;
 }
 
 void bioseController::addHomeButton(){
@@ -39,8 +46,10 @@ void bioseController::addHomeButton(){
     m_bar->addButton(buttonIcon, "Home", 0, false);
     blHomeWidget *home = new blHomeWidget(this);
     home->addSection("Applications");
-    blHomeTileInfo infoSettings("blHomeSettings", "Settings", "settings", m_iconsDir + QDir::separator() + "settings.png");
+    blHomeTileInfo infoSettings("blSettings", "Settings", "settings", m_iconsDir + QDir::separator() + "settings.png");
     home->addTile("Applications", infoSettings);
+    blHomeTileInfo infoHubZero("blHubZero", "Community", "Bio Imaging Community", m_iconsDir + QDir::separator() + "people.png");
+    home->addTile("Applications", infoHubZero);
     blHomeTileInfo infoFinder("blFinder", "Finder", "finder", m_iconsDir + QDir::separator() + "search_neg.png");
     home->addTile("Applications", infoFinder);
     blHomeTileInfo infoFinderAdmin("blFinderAdmin", "Finder admin", "finderAdmin", m_iconsDir + QDir::separator() + "search_neg.png");
@@ -88,7 +97,7 @@ void bioseController::openApp(blHomeTileInfo info){
 
         // initialize the database
         blFinderAccess *database = blFinderAccess::instance();
-        blHomeSettingsGroups settings;
+        blSettingsGroups settings;
         settings.load(m_settingsUrl);
         database->setDatabaseFile(settings.value("Finder", "Database URL"));
         database->load();
@@ -109,7 +118,7 @@ void bioseController::openApp(blHomeTileInfo info){
 
         // initialize the database
         blFinderAccess *database = blFinderAccess::instance();
-        blHomeSettingsGroups settings;
+        blSettingsGroups settings;
         settings.load(m_settingsUrl);
         database->setDatabaseFile(settings.value("Finder", "Database URL"));
         database->load();
@@ -118,6 +127,20 @@ void bioseController::openApp(blHomeTileInfo info){
         m_centralWidget->addWidget(finderAdmin);
         m_bar->addButton(info.iconeUrl(), info.name(), m_centralWidget->count()-1, true);
 
+    }
+    else if (info.name() == "Community"){
+        if (m_communityIndex > 0){
+            m_bar->setButtonChecked(m_communityIndex, false);
+            m_centralWidget->slideInIdx(m_communityIndex);
+            return;
+        }
+        else{
+            m_communityIndex = m_centralWidget->count();
+            blWebBrowser* webBrowser = new blWebBrowser(this);
+            webBrowser->setHomePage(m_hubZeroUrl, true);
+            m_centralWidget->addWidget(webBrowser);
+            m_bar->addButton(info.iconeUrl(), info.name(), m_centralWidget->count()-1, true);
+        }
     }
     else{
         // add widget
@@ -139,14 +162,15 @@ void bioseController::openTool(QString xmlUrl){
     blToolInfo* toolInfo = pars.getToolInfo(xmlUrl);
     //toolInfo->print();
 
-    blHomeSettingsGroups settings;
+    blSettingsGroups settings;
     settings.load(m_settingsUrl);
     QString historyUrl = settings.value("Tools", "History directory");
     QString viewersUrl = settings.value("Tools", "Viewers directory");
-
+    QString binariesUrl = settings.value("Tools", "Binaries directory", true);
+    settings.save(m_settingsUrl);
     //qDebug() << "bioseController, historyUrl = " << historyUrl;
 
-    blToolDefaultWidget *tool = new blToolDefaultWidget(toolInfo, historyUrl, viewersUrl,this);
+    blToolDefaultWidget *tool = new blToolDefaultWidget(toolInfo, historyUrl, viewersUrl, binariesUrl, this);
     m_centralWidget->addWidget(tool);
     m_bar->addButton( m_iconsDir + QDir::separator() + "tool.png", "Tool", m_centralWidget->count()-1, true);
     // show tab
@@ -165,7 +189,7 @@ void bioseController::setIconsDir(QString url){
 blHomeSettingsGroupView * bioseController::loadSettings(){
 
     QFile file(m_settingsUrl);
-    blHomeSettingsGroups groups;
+    blSettingsGroups groups;
     if (!file.exists()){
 
         // home:
@@ -185,11 +209,11 @@ blHomeSettingsGroupView * bioseController::loadSettings(){
         groups.load(m_settingsUrl);
     }
     blHomeSettingsGroupView *view = new blHomeSettingsGroupView(groups, this);
-    connect(view, SIGNAL(save(blHomeSettingsGroups)), this, SLOT(saveSettings(blHomeSettingsGroups)));
+    connect(view, SIGNAL(save(blSettingsGroups)), this, SLOT(saveSettings(blSettingsGroups)));
     return view;
 }
 
-void bioseController::saveSettings(blHomeSettingsGroups settings){
+void bioseController::saveSettings(blSettingsGroups settings){
 
     // save settings
     settings.save(m_settingsUrl);

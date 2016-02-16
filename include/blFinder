@@ -31,6 +31,5 @@
 #include "../src/blFinder/model/blFinderSectionsLinkInfo.h"
 #include "../src/blFinder/model/blFinderTutorialsLinkInfo.h"
 #include "../src/blFinder/model/blFinderTutorialInfo.h"
-#include "../src/blFinder/model/blSingleton.h"
 #include "../src/blFinder/controller/blFinderDefaultWidget.h"
 #include "../src/blFinder/controller/blFinderAdminDefaultWidget.h"

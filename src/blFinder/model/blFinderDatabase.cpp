@@ -1208,7 +1208,7 @@ QList<blFinderTutorialInfo>  blFinderDatabase::childrenTutorials(int section, QS
 // view table
 void blFinderDatabase::viewTable(const QString tableName)
 {
-    qDebug() << "khToolsDatabase::ViewTable ";
+    qDebug() << "blToolsDatabase::ViewTable ";
     // Fait la requete
     QSqlQuery query(m_db);
     query.prepare("select * from "+tableName+" " );

@@ -1071,3 +1071,289 @@ color : #fff;
 background-color: #c9302c;
 border: 2px solid #c9302c;
 }
+
+/* ////////////////
+  blWebBrowser
+/////////////////*/
+QPushButton#blWebBrowserBack {
+
+  margin-bottom: 0;
+  font-size: 10px;
+  color: #fff;
+  background-color: #fff;
+  border: 1px solid #fff;
+  border-radius: 4px;
+  image: url(back.png);
+  width: 48px;
+  height: 48px;
+}
+
+QPushButton#blWebBrowserBack:hover {
+  color: #fff;
+  background-color: #5A8E8E;
+  border: 1px solid #5A8E8E;
+}
+
+QPushButton#blWebBrowserForward {
+
+  margin-bottom: 0;
+  font-size: 10px;
+  color: #fff;
+  background-color: #fff;
+  border: 1px solid #fff;
+  border-radius: 4px;
+  image: url(forward.png);
+}
+
+QPushButton#blWebBrowserForward:hover {
+  color: #fff;
+  background-color: #5A8E8E;
+  border: 1px solid #5A8E8E;
+}
+
+QPushButton#blWebBrowserHome {
+
+  margin-bottom: 0;
+  font-size: 10px;
+  color: #fff;
+  background-color: #fff;
+  border: 1px solid #fff;
+  border-radius: 4px;
+  image: url(home_web.png);
+}
+
+QPushButton#blWebBrowserHome:hover {
+  color: #fff;
+  background-color: #5A8E8E;
+  border: 1px solid #5A8E8E;
+}
+
+/* //////////////////////////////////
+		   blProject
+///////////////////////////////////*/
+QPushButton#blProjectNewProjectButton {
+
+  margin-bottom: 0;
+  font-size: 10px;
+  color: #fff;
+  background-color: #fff;
+  border: 1px solid #fff;
+  border-radius: 4px;
+  image: url(newproject.png);
+}
+
+QPushButton#blProjectNewProjectButton:hover {
+  color: #fff;
+  background-color: #5A8E8E;
+  border: 1px solid #5A8E8E;
+}
+
+QPushButton#blProjectHelpButton {
+
+  margin-bottom: 0;
+  font-size: 10px;
+  color: #fff;
+  background-color: #fff;
+  border: 1px solid #fff;
+  border-radius: 4px;
+  image: url(help.png);
+}
+
+QPushButton#blProjectHelpButton:hover {
+  color: #fff;
+  background-color: #fff;
+  border: 1px solid #fff;
+}
+/* // ///////////////////////////////////////////////
+ blTwoSideWidget
+ // /////////////////////////////////////////////// */
+#blTwoSideWidget{
+    background-color: #ffffff;
+}
+/* // ///////////////////////////////////////////////
+ blTwoSideRightContainer
+ // /////////////////////////////////////////////// */
+#blTwoSideRightContainer{
+    border-top: 1px solid rgba(01,81,81,65%);
+    border-right: 1px solid rgba(01,81,81,65%); 
+    border-left: 1px solid rgba(01,81,81,65%);
+	border-bottom: 1px solid rgba(01,81,81,65%);
+    background-color: #ffffff; 
+    border-radius: 12px; 
+}
+
+/* // ///////////////////////////////////////////////
+ blTwoSideRightContainer
+ // /////////////////////////////////////////////// */
+#blTwoSideLeftContainer{border-left: 0px solid #000000;
+    border-top: 0px solid #000000; 
+    border-right: 0px solid #000000; 
+    background-color: #ffffff; 
+    border-bottom: 0px solid #000000; 
+}
+
+/* // ///////////////////////////////////////////////
+blForm
+ // /////////////////////////////////////////////// */
+#blLabelFormHeader1{
+    color: black;
+    font: bold;
+    border-top : 2px solid #aaaaaa;
+    text-transform: uppercase;
+}
+
+#blLabelFormHeader2{
+    color: black;
+    font: italic;
+    margin-left: 8px;
+    border-top : 1px solid #aaaaaa;
+    text-transform: uppercase;
+}
+ 
+#blForm{
+    border: 1px solid rgb(01,81,81);
+    border-radius: 10px;
+    background-color: #ffffff ;
+} 
+
+QToolButton#blProjectSaveButton {
+
+  margin-bottom: 0;
+  font-size: 10px;
+  color: #fff;
+  background-color: #fff;
+  border: 1px solid #fff;
+  border-radius: 2px;
+  image: url(save.png);
+}
+
+QToolButton#blProjectSaveButton:hover {
+  color: #fff;
+  background-color: #fff;
+  border: 1px solid #5A8E8E;
+}
+
+QToolButton#blProjectAddImageButton {
+
+  margin-bottom: 0;
+  font-size: 10px;
+  color: #fff;
+  background-color: #fff;
+  border: 1px solid #fff;
+  border-radius: 2px;
+  image: url(add_image.png);
+}
+
+QToolButton#blProjectAddImageButton:hover {
+  color: #fff;
+  background-color: #fff;
+  border: 1px solid #5A8E8E;
+}
+
+QPushButton#blProjectTableColumnSelectorWidget {
+
+  margin-bottom: 0;
+  font-size: 10px;
+  color: #fff;
+  background-color: #fff;
+  border: 1px solid #fff;
+  border-radius: 4px;
+  image: url(column_arrow.png);
+}
+
+QPushButton#blProjectTableColumnSelectorWidget:hover {
+  color: #fff;
+  background-color: #fff;
+  border: 1px solid #fff;
+}
+
+
+QPushButton#blProjectDatabaseButton {
+
+  margin-bottom: 0;
+  font-size: 10px;
+  color: #fff;
+  background-color: #fff;
+  border: 1px solid #fff;
+  border-radius: 4px;
+  image: url(database.png);
+}
+
+QPushButton#blProjectDatabaseButton:hover {
+  color: #fff;
+  background-color: #fff;
+  border: 1px solid #fff;
+}
+
+QPushButton#blProjectTrashButton {
+
+  margin-bottom: 0;
+  font-size: 10px;
+  color: #fff;
+  background-color: #fff;
+  border: 1px solid #fff;
+  border-radius: 4px;
+  image: url(trash.png);
+}
+
+QPushButton#blProjectTrashButton:hover {
+  color: #fff;
+  background-color: #fff;
+  border: 1px solid #fff;
+}
+
+/* ////////////////////////////////////////
+          blProjectView
+//////////////////////////////////////// */		  
+QPushButton#blProjectViewColumnHeaderThumbnailButton {
+
+  margin-bottom: 0;
+  font-size: 10px;
+  color: #fff;
+  background-color: #5A8E8E;
+  border: 0px solid #5A8E8E;
+  border-radius: 4px;
+  image: url(thumbnail.png);
+}
+
+QPushButton#blProjectViewColumnHeaderThumbnailButton:hover {
+  color: #fff;
+  background-color: #5A8E8E;
+  border: 1px solid #fff;
+}
+
+
+QPushButton#blProjectViewColumnHeaderAddRemoveColumnsButton {
+
+  margin-bottom: 0;
+  font-size: 10px;
+  color: #fff;
+  background-color: #5A8E8E;
+  border: 0px solid #5A8E8E;
+  border-radius: 4px;
+  image: url(add_remove.png);
+}
+
+QPushButton#blProjectViewColumnHeaderAddRemoveColumnsButton:hover {
+  color: #fff;
+  background-color: #5A8E8E;
+  border: 1px solid #fff;
+}
+
+QToolButton#blProjectEditLabelButton {
+
+  margin-bottom: 0;
+  font-size: 10px;
+  color: #fff;
+  background-color: #fff;
+  border: 0px solid #fff;
+  border-radius: 2px;
+  image: url(tag.png);
+}
+
+QToolButton#blProjectEditLabelButton:hover {
+  color: #fff;
+  background-color: #fff;
+  border: 1px solid #5A8E8E;
+}
+

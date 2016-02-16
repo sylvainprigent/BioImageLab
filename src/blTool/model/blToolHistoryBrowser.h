@@ -1,7 +1,7 @@
 #ifndef BLTOOLHISTORYBROWSER_H
 #define BLTOOLHISTORYBROWSER_H
 
-#include "blToolExecLog.h"
+#include "blToolCore/model/blToolExecLog.h"
 #include "blToolExport.h"
 
 class BLTOOL_EXPORT blToolHistoryBrowser : public QObject

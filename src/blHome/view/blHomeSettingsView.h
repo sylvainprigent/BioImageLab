@@ -3,7 +3,7 @@
 #include <QtWidgets>
 #include "blHomeExport"
 
-#include "../model/blHomeSettings.h"
+#include "blCore/blSettings.h"
 
 /// \class blHomeWidgetBar
 /// \brief Define a generic home bar widget
@@ -11,26 +11,26 @@ class BLHOME_EXPORT blHomeSettingsView : public QWidget
 {
     Q_OBJECT
 public:
-    blHomeSettingsView(blHomeSettings settings, QWidget *parent = 0);
+    blHomeSettingsView(blSettings settings, QWidget *parent = 0);
 
 signals:
 
 public:
     void setTitle(QString title);
     QString title();
-    blHomeSettings settings();
+    blSettings settings();
     void setTitleVisible(bool value);
 
 private:
     QGridLayout *m_layout;
-    blHomeSettings m_settings;
+    blSettings m_settings;
     QLabel *m_titleLabel;
 };
 
 // ////////////////////////////////////////
 //          blHomeSettingsWidget
 // ////////////////////////////////////////
-class blHomeSettingsWidget : public QWidget{
+class BLHOME_EXPORT blHomeSettingsWidget : public QWidget{
 
     Q_OBJECT
 public:
@@ -50,7 +50,7 @@ protected:
 // ////////////////////////////////////////
 //      blHomeSettingsWidgetLineEdit
 // ////////////////////////////////////////
-class blHomeSettingsWidgetLineEdit : public blHomeSettingsWidget{
+class BLHOME_EXPORT blHomeSettingsWidgetLineEdit : public blHomeSettingsWidget{
 
     Q_OBJECT
 public:

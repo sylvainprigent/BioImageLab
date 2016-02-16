@@ -81,7 +81,9 @@ void blToolExecGui::buildGui(blToolInfo *toolInfo){
 
     // connections
     connect(m_runWidget, SIGNAL(run()), this, SLOT(askRun()));
+    connect(m_inputSelectorWidget, SIGNAL(changeOutputDir(QString)), this, SIGNAL(changeOutputDir(QString)));
     connect(m_inputSelectorWidget, SIGNAL(error(QString)), this, SIGNAL(error(QString)));
+    connect(m_inputSelectorWidget, SIGNAL(progressHasFinished(QString, QString)), this, SIGNAL(processHasFinished(QString ,QString)));
 }
 
 void blToolExecGui::askRun(){
@@ -110,4 +112,14 @@ void blToolExecGui::updateOutput(QString data)
 {
     m_standardOutputViewer->setVisible(true);
     m_standardOutputViewer->updateOutput(data);
+}
+
+void blToolExecGui::saveOutputMetaData(int processId, QString outputDir, blioDataInfo* inputs, blioDataInfo* outputs,
+                                       blioParameters* params, blToolInfo* toolinfo){
+
+    m_inputSelectorWidget->saveOutputMetaData(processId, outputDir, inputs, outputs, params, toolinfo);
+}
+
+void blToolExecGui::progressFinished(int processId, QString toolName){
+    m_inputSelectorWidget->progressFinished(processId, toolName);
 }

@@ -1,5 +1,5 @@
-/// \file khTagsWidget.h
-/// \brief khTagsWidget
+/// \file blTagsWidget.h
+/// \brief blTagsWidget
 /// \author Sylvain Prigent
 /// \version 0.1
 /// \date 2014
@@ -13,7 +13,7 @@
 
 class blClosableComboBox;
 // ////////////////////////////////////////////////
-//  khTagsWidget
+//  blTagsWidget
 // ////////////////////////////////////////////////
 /// \class blMultipleComboBox
 /// \brief Widget that contains a dynamic list of line edit

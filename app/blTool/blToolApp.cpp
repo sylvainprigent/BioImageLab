@@ -1,8 +1,11 @@
+#include <blToolCore>
 #include <blTool>
 #include <QtWidgets>
 
 #include <QApplication>
 #include <QDir>
+
+#include "blCore/blSettingsAccess.h"
 
 QString loadStyleSheet(QString fileUrl){
     QFile file(fileUrl);
@@ -122,8 +125,9 @@ int main(int argc, char *argv[])
     //toolInfo->print();
     QString historyUrl = "C:\\Users\\sprigent\\Documents\\codes\\BioImageLab_dist\\history\\";
     QString viewersUrl = "C:\\Users\\sprigent\\Documents\\codes\\BioImageLab_dist\\viewers\\";
+    QString binariesUrl = "C:\\Users\\sprigent\\Documents\\codes\\BioImageLab_dist\\bin\\";
 
-    blToolDefaultWidget w(toolInfo, historyUrl, viewersUrl);
+    blToolDefaultWidget w(toolInfo, historyUrl, viewersUrl, binariesUrl);
     w.show();
 
     QString styleFile = "C:\\Users\\sprigent\\Documents\\codes\\BioImageLab\\theme\\stylesheet.css";

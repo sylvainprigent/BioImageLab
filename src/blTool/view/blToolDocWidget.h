@@ -2,7 +2,7 @@
 #define BLTOOLDOCWIDGET_H
 
 #include <QtWidgets>
-#include <QtWebKitWidgets/QWebView>
+#include "blWidgets/blWebBrowser.h"
 #include "blToolExport.h"
 
 class BLTOOL_EXPORT blToolDocWidget : public QWidget
@@ -21,7 +21,7 @@ public slots:
     void loadPage(QString page);
 
 private:
-    QWebView *m_htmlPage; ///< web page container
+    blWebBrowser *m_htmlPage; ///< web page container
 
 };
 

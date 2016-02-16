@@ -25,7 +25,7 @@ private slots:
     void showTab(int id);
     void closeTab(int id);
     void openApp(blHomeTileInfo info);
-    void saveSettings(blHomeSettingsGroups settings);
+    void saveSettings(blSettingsGroups settings);
 
 private:
     void addHomeButton();
