@@ -1,0 +1,2 @@
+#include "../src/blCore/blSettings.h"
+#include "../src/blCore/blSettingsGroups.h"
