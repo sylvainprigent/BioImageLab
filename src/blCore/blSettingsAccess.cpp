@@ -26,6 +26,10 @@ void blSettingsAccess::load(){
     m_settings->load(m_fileUrl);
 }
 
+void blSettingsAccess::save(){
+    m_settings->save(m_fileUrl);
+}
+
 // getters
 blSettingsGroups *blSettingsAccess::settings(){
     return m_settings;

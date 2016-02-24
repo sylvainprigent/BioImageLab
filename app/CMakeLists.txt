@@ -14,5 +14,6 @@
 add_subdirectory( blTool )
 add_subdirectory( blFinder )
 add_subdirectory( blHome )
-add_subdirectory( blProject )
+#add_subdirectory( blProject )
 add_subdirectory( biose )
+add_subdirectory( bioseapp )

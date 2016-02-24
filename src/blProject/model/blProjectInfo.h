@@ -8,12 +8,12 @@
 
 #pragma once
 
-#include "blProjectExport.h"
+#include "blProjectnewExport.h"
 #include <QString>
 
 /// \class blProjectInfo
 /// \brief Contains the informations of a blProject
-class BLPROJECT_EXPORT blProjectInfo
+class BLPROJECTNEW_EXPORT blProjectInfo
 {
 public:
     /// \fn blProjectInfo();

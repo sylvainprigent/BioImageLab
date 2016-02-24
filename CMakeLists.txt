@@ -13,10 +13,10 @@
 
 cmake_minimum_required(VERSION 2.8)
 
-cmake_policy(SET CMP0048 OLD)
-cmake_policy(SET CMP0028 OLD)
-cmake_policy(SET CMP0020 OLD)
-cmake_policy(SET CMP0043 OLD)
+#cmake_policy(SET CMP0048 OLD)
+#cmake_policy(SET CMP0028 OLD)
+#cmake_policy(SET CMP0020 OLD)
+#cmake_policy(SET CMP0043 OLD)
 project(blab)
 
 set(${PROJECT_NAME}_VERSION_MAJOR 0 CACHE STRING "blab major version number." FORCE)

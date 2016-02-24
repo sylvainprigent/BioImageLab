@@ -4,7 +4,7 @@
 #include "../../blWidgets/blHideableWidget.h"
 #include "../model/blHomeTileInfo.h"
 
-#include "blHomeExport"
+#include "blHomeExport.h"
 
 /// \class blHomeWidget
 /// \brief Define a generic home tiling widget
@@ -18,8 +18,10 @@ signals:
     void action(blHomeTileInfo action);
 
 public:
-    void addSection(QString name);
+    void addSection(QString name, int strech = 0, bool useFlowLayout = true);
     void addTile(QString section, blHomeTileInfo info);
+    void addWidget(QString section, QWidget *widget);
+
 
 private:
     QStringList m_sectionsNames;

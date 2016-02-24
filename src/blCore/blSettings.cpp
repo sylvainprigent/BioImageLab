@@ -12,6 +12,13 @@ void blSettings::add(QString key, QString value, QString type){
     //qDebug() << " ++++++++++++++ add key to the settings";
 }
 
+void blSettings::set(QString key, QString value, QString type){
+    QStringList data;
+    data.append(value);
+    data.append(type);
+    m_map[key] = data;
+}
+
 QString blSettings::value(QString key, bool createIfNotExists){
     if (m_map.contains(key)){
         return m_map[key][0];

@@ -1,7 +1,7 @@
 #pragma once
 
 #include <QtWidgets>
-#include "blHomeExport"
+#include "blHomeExport.h"
 
 /// \class blHomeWidgetBar
 /// \brief Define a generic home bar widget

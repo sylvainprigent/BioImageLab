@@ -2,16 +2,16 @@
 #include "../../blWidgets/blHideableWidget.h"
 #include "blHomeSettingsView.h"
 
-blHomeSettingsGroupView::blHomeSettingsGroupView(blSettingsGroups settings, QWidget *parent)
+blHomeSettingsGroupView::blHomeSettingsGroupView(blSettingsGroups *settings, QWidget *parent)
     : QWidget(parent){
 
     m_settings = settings;
     QVBoxLayout *layout = new QVBoxLayout;
     this->setLayout(layout);
-    for (int i = 0 ; i < settings.groupsCount() ; ++i){
-        blHideableWidget *hideable = new blHideableWidget(settings.groupTitleAt(i), 2, this);
-        blHomeSettingsView *settingsView = new blHomeSettingsView(settings.groupAt(i),this);
-        settingsView->setTitle(settings.groupTitleAt(i));
+    for (int i = 0 ; i < settings->groupsCount() ; ++i){
+        blHideableWidget *hideable = new blHideableWidget(settings->groupTitleAt(i), 2, this);
+        blHomeSettingsView *settingsView = new blHomeSettingsView(settings->groupAt(i),this);
+        settingsView->setTitle(settings->groupTitleAt(i));
         settingsView->setTitleVisible(false);
         hideable->addWidget(settingsView);
         layout->addWidget(hideable);
@@ -29,11 +29,11 @@ blHomeSettingsGroupView::blHomeSettingsGroupView(blSettingsGroups settings, QWid
 
 void blHomeSettingsGroupView::emitSave(){
 
-    blSettingsGroups settings;
+    m_settings->clear();
     for(int i = 0 ; i < m_settingWidgets.count() ; ++i){
-        settings.add(m_settingWidgets[i]->title(),m_settingWidgets[i]->settings());
+        m_settings->add(m_settingWidgets[i]->title(),m_settingWidgets[i]->settings());
     }
 
-    emit save(settings);
+    emit save(m_settings);
 }
 

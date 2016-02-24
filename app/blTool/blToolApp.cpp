@@ -7,14 +7,6 @@
 
 #include "blCore/blSettingsAccess.h"
 
-QString loadStyleSheet(QString fileUrl){
-    QFile file(fileUrl);
-    file.open(QIODevice::ReadOnly);
-    QString sty = QString::fromStdString(file.readAll().toStdString());
-    //qDebug() << sty;
-    return sty;
-}
-
 /*
 int main(int argc, char *argv[])
 {

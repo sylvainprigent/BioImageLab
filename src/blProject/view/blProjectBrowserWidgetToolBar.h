@@ -8,13 +8,13 @@
 
 #pragma once
 
-#include "blProjectExport.h"
+#include "blProjectnewExport.h"
 #include <QWidget>
 
 /// \class blProjectBrowserWidgetToolBar
 /// \brief Widget containing a toolbar to
 /// store the project borwser actions
-class BLPROJECT_EXPORT blProjectBrowserWidgetToolBar : public QWidget
+class BLPROJECTNEW_EXPORT blProjectBrowserWidgetToolBar : public QWidget
 {
     Q_OBJECT
 public:

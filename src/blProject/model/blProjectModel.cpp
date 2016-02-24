@@ -101,7 +101,7 @@ void blProjectModel::save(){
     }
     qDebug() << "file url contains: " << dataFiles;
     QDataStream out(&file);
-    out.setVersion(QDataStream::Qt_5_5);
+    out.setVersion(QDataStream::Qt_5_2);
     out << m_projectName;
     out << dataFiles;
 }

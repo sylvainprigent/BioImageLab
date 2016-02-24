@@ -1,5 +1,5 @@
 #include "blToolHistoryWidget.h"
-#include "../blWidgets/blhideableWidget.h"
+#include "blWidgets/blHideableWidget.h"
 #include "blToolHistoryWidgetList.h"
 
 blToolHistoryWidget::blToolHistoryWidget(QString historyFile, QWidget *parent) : QWidget(parent)

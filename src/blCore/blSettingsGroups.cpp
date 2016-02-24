@@ -21,9 +21,29 @@ void blSettingsGroups::add(QString group, QString key, QString value){
     }
 }
 
+void blSettingsGroups::set(QString group, QString key, QString value){
+    int idx = this->groupIdx(group);
+    if (idx >= 0){
+        blSettings settings = m_settings.at(idx);
+        settings.set(key, value);
+        m_settings[idx] = settings;
+    }
+    else{
+        blSettings settings;
+        settings.add(key, value);
+        m_settings.append(settings);
+        m_groups.append(group);
+    }
+}
+
 void blSettingsGroups::add(QString group, blSettings settings){
     m_groups.append(group);
     m_settings.append(settings);
+}
+
+void blSettingsGroups::clear(){
+    m_settings.clear();
+    m_groups.clear();
 }
 
 QString blSettingsGroups::value(QString group, QString key, bool createIfNotExist){

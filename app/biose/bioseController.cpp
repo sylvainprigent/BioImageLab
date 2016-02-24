@@ -189,36 +189,36 @@ void bioseController::setIconsDir(QString url){
 blHomeSettingsGroupView * bioseController::loadSettings(){
 
     QFile file(m_settingsUrl);
-    blSettingsGroups groups;
+    blSettingsGroups *groups = new blSettingsGroups;
     if (!file.exists()){
 
         // home:
-        groups.add("Home", "stylesheet", "");
+        groups->add("Home", "stylesheet", "");
 
         // finder:
-        groups.add("Finder", "Database URL", "");
-        groups.add("Finder", "Tool shed", ""); // "C:\\Users\\sprigent\\Documents\\codes\\BioImageLab_dist\\tools\\"
-        groups.add("Finder", "Finder directory", ""); // "C:\\Users\\sprigent\\Documents\\codes\\BioImageLab_dist\\"
+        groups->add("Finder", "Database URL", "");
+        groups->add("Finder", "Tool shed", ""); // "C:\\Users\\sprigent\\Documents\\codes\\BioImageLab_dist\\tools\\"
+        groups->add("Finder", "Finder directory", ""); // "C:\\Users\\sprigent\\Documents\\codes\\BioImageLab_dist\\"
 
         // Tools:
-        groups.add("Tools", "History directory", ""); //"C:\\Users\\sprigent\\Documents\\codes\\BioImageLab_dist\\history\\"
-        groups.add("Tools", "Viewers directory", ""); // "C:\\Users\\sprigent\\Documents\\codes\\BioImageLab_dist\\viewers\\"
+        groups->add("Tools", "History directory", ""); //"C:\\Users\\sprigent\\Documents\\codes\\BioImageLab_dist\\history\\"
+        groups->add("Tools", "Viewers directory", ""); // "C:\\Users\\sprigent\\Documents\\codes\\BioImageLab_dist\\viewers\\"
 
     }
     else{
-        groups.load(m_settingsUrl);
+        groups->load(m_settingsUrl);
     }
     blHomeSettingsGroupView *view = new blHomeSettingsGroupView(groups, this);
-    connect(view, SIGNAL(save(blSettingsGroups)), this, SLOT(saveSettings(blSettingsGroups)));
+    connect(view, SIGNAL(save(blSettingsGroups*)), this, SLOT(saveSettings(blSettingsGroups*)));
     return view;
 }
 
-void bioseController::saveSettings(blSettingsGroups settings){
+void bioseController::saveSettings(blSettingsGroups *settings){
 
     // save settings
-    settings.save(m_settingsUrl);
+    settings->save(m_settingsUrl);
     // update stylesheet
-    QString styleFile = settings.value("Home", "stylesheet");
+    QString styleFile = settings->value("Home", "stylesheet");
     qApp->setStyleSheet("file:///" + styleFile);
     // message
     QMessageBox::information(this, tr("Save settings"), "Settings have been saved !");

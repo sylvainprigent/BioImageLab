@@ -71,7 +71,7 @@ void blProjectModelMainColumn::load(){
             return;
         }
         QDataStream in(&file);
-        in.setVersion(QDataStream::Qt_5_5);
+        in.setVersion(QDataStream::Qt_5_2);
         in >> m_name;
         in >> m_columns;
     }
@@ -85,7 +85,7 @@ void blProjectModelMainColumn::save(){
         return;
     }
     QDataStream out(&file);
-    out.setVersion(QDataStream::Qt_5_5);
+    out.setVersion(QDataStream::Qt_5_2);
     out << m_name;
     out << m_columns;
 }

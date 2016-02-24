@@ -1,7 +1,7 @@
 #pragma once
 
 #include <QtWidgets>
-#include "blHomeExport"
+#include "blHomeExport.h"
 
 /// \class blHomeTileInfo
 /// \brief Class containg the infos to create a tile

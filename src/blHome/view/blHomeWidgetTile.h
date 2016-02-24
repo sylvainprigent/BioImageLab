@@ -3,7 +3,7 @@
 #include <QtWidgets>
 #include "../model/blHomeTileInfo.h"
 
-#include "blHomeExport"
+#include "blHomeExport.h"
 
 /// \class blHomeWidgetTile
 /// \brief Define a tile for the home tiling menu

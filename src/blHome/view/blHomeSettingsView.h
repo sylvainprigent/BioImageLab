@@ -1,7 +1,7 @@
 #pragma once
 
 #include <QtWidgets>
-#include "blHomeExport"
+#include "blHomeExport.h"
 
 #include "blCore/blSettings.h"
 

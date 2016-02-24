@@ -81,13 +81,13 @@ void blProjectModelColumn::setData(QMap<unsigned int, QString> &data){
 // datastream
 QDataStream & operator << (QDataStream & out, const blProjectModelColumn & column)
 {
-    out.setVersion(QDataStream::Qt_5_5);
+    out.setVersion(QDataStream::Qt_5_2);
     out << quint8(column.isMultiLine()) << column.dataType() << column.data() ;
     return out;
 }
 
 QDataStream & operator >> (QDataStream & in, blProjectModelColumn & column){
-    in.setVersion(QDataStream::Qt_5_5);
+    in.setVersion(QDataStream::Qt_5_2);
     quint8 isml;
     QString dataType;
     QMap<unsigned int, QString> data;

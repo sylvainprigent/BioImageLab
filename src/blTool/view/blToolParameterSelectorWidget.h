@@ -4,7 +4,7 @@
 #include <QtWidgets>
 #include "blToolCore/model/blToolParameters.h"
 #include "blToolCore/model/blioParameters.h"
-#include "../View/blToolInputWidget.h"
+#include "blToolInputWidget.h"
 #include "blToolExport.h"
 
 class BLTOOL_EXPORT blToolParameterSelectorWidget : public QWidget

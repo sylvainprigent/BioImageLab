@@ -1,7 +1,7 @@
 #pragma once
 
 #include <QtWidgets>
-#include "blCoreExport"
+#include "blCoreExport.h"
 
 /// \class blSettings
 /// \brief Class containg any settings as key = value
@@ -12,6 +12,7 @@ public:
 
 public:
     // setters getters
+    void set(QString key, QString value, QString type = "string");
     void add(QString key, QString value, QString type = "string");
     QString value(QString key, bool createIfNotExists = false);
     QString type(QString key);

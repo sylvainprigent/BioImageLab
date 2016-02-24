@@ -8,7 +8,7 @@
 
 #pragma once
 
-#include "blProjectExport.h"
+#include "blProjectnewExport.h"
 #include <QWidget>
 #include "blProjectBrowserWidgetToolBar.h"
 #include "blProjectBrowserWidgetList.h"
@@ -16,7 +16,7 @@
 /// \class blProjectBrowserWidget
 /// \brief Widget that shows the list of project
 /// and a tool bar to create a new project
-class BLPROJECT_EXPORT blProjectBrowserWidget : public QWidget
+class BLPROJECTNEW_EXPORT blProjectBrowserWidget : public QWidget
 {
     Q_OBJECT
 public:

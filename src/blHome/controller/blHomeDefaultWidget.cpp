@@ -102,24 +102,24 @@ void blHomeDefaultWidget::setIconsDir(QString url){
 blHomeSettingsGroupView * blHomeDefaultWidget::loadSettings(){
 
     QFile file(m_settingsUrl);
-    blSettingsGroups groups;
+    blSettingsGroups *groups = new blSettingsGroups;
     if (!file.exists()){
 
         // finder:
-        groups.add("Example1", "directory", "/my/dir/");
-        groups.add("Example1", "name", "my name");
-        groups.add("Example1", "parameter", "value");
+        groups->add("Example1", "directory", "/my/dir/");
+        groups->add("Example1", "name", "my name");
+        groups->add("Example1", "parameter", "value");
 
         // Tools:
-        groups.add("Example2", "directory 2", "/my/dir/");
-        groups.add("Example2", "name 2", "my name");
-        groups.add("Example2", "parameter 2", "value");
+        groups->add("Example2", "directory 2", "/my/dir/");
+        groups->add("Example2", "name 2", "my name");
+        groups->add("Example2", "parameter 2", "value");
     }
     else{
-        groups.load(m_settingsUrl);
+        groups->load(m_settingsUrl);
     }
     blHomeSettingsGroupView *view = new blHomeSettingsGroupView(groups, this);
-    connect(view, SIGNAL(save(blSettingsGroups)), this, SLOT(saveSettings(blSettingsGroups)));
+    connect(view, SIGNAL(save(blSettingsGroups*)), this, SLOT(saveSettings(blSettingsGroups*)));
     return view;
 }
 

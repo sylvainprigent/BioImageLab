@@ -37,6 +37,7 @@ public:
     /// \fn void load();
     /// \brief Load the settings
     void load();
+    void save();
 
 public:
     // getters

@@ -22,7 +22,7 @@ private slots:
     void showTab(int id);
     void closeTab(int id);
     void openApp(blHomeTileInfo info);
-    void saveSettings(blSettingsGroups settings);
+    void saveSettings(blSettingsGroups *settings);
     void openTool(QString xmlUrl);
 
 private:
