@@ -8,7 +8,7 @@ blWebBrowser::blWebBrowser(QWidget *parent)
 
     QWidget *toolBar = this->createToolBar();
     toolBar->setMaximumHeight(48);
-    m_webView = new QWebView(this);
+    m_webView = new QWebEngineView(this);
 
     thisLayout->addWidget(toolBar);
     thisLayout->addWidget(m_webView);
@@ -78,6 +78,6 @@ void blWebBrowser::setHomePage(QString pageURL, bool isWebURL){
     }
 }
 
-QWebView *blWebBrowser::webView(){
+QWebEngineView *blWebBrowser::webView(){
     return m_webView;
 }

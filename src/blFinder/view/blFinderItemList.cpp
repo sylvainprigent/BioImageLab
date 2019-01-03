@@ -1,6 +1,6 @@
 #include "blFinderItemList.h"
 #include "blFinderItem.h"
-#include <QtWebKitWidgets/QWebView>
+#include <QtWebEngineWidgets/QWebEngineView>
 
 blFinderItemList::blFinderItemList(QWidget *parent) : QWidget(parent)
 {
@@ -57,7 +57,7 @@ void blFinderItemList::setInfos(QList<blFinderSectionInfo> infos, QString title)
 void blFinderItemList::setTutorial(blFinderTutorialInfo tuto, QString title){
     this->freeLayout();
 
-    QWebView *htmlPage = new QWebView(this);
+    QWebEngineView *htmlPage = new QWebEngineView(this);
     QString page = tuto.docUrl();
     page = page.replace("\\", "/");
     qDebug() << "loadPage: " <<"file:///" + page;

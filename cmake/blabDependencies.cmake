@@ -19,9 +19,8 @@ set(CMAKE_AUTOMOC ON)
 # Find the QtWidgets library
 find_package(Qt5Widgets REQUIRED)
 find_package(Qt5Xml REQUIRED) 
-find_package(Qt5WebKit REQUIRED)
 find_package(Qt5Xml REQUIRED)
-find_package(Qt5WebKitWidgets REQUIRED)
+find_package(Qt5WebEngineWidgets REQUIRED)
 find_package(Qt5Sql REQUIRED)
 
 ## #################################################################

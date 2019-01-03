@@ -1,7 +1,7 @@
 #pragma once
 
 #include <QtWidgets>
-#include <QtWebKitWidgets/QWebView>
+#include <QtWebEngineWidgets/QtWebEngineWidgets>
 #include "blWidgetsExport.h"
 
 class BLWIDGETS_EXPORT blWebBrowser : public QWidget
@@ -14,7 +14,7 @@ signals:
 
 public slots:
     void setHomePage(QString homePage, bool isWebURL);
-    QWebView *webView();
+    QWebEngineView *webView();
 
 
 private slots:
@@ -26,7 +26,7 @@ private:
     QWidget *createToolBar();
 
 private:
-    QWebView *m_webView;
+    QWebEngineView *m_webView;
     bool m_isWebURL;
     QString m_homeURL;
 };

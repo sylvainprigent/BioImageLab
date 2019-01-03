@@ -46,7 +46,8 @@ target_link_libraries( ${PROJECT_NAME} blCore blWidgets Qt5::Widgets)
 ## Export header file
 ## #################################################################
 
-add_compiler_export_flags()
+set(CMAKE_CXX_VISIBILITY_PRESET hidden)
+set(CMAKE_VISIBILITY_INLINES_HIDDEN 1)
 
 generate_export_header(${PROJECT_NAME}
   EXPORT_FILE_NAME "${PROJECT_NAME}Export.h")

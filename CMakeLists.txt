@@ -11,13 +11,10 @@
 ## Header
 ## #################################################################
 
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.10)
+cmake_policy(VERSION 3.10)
 
-#cmake_policy(SET CMP0048 OLD)
-#cmake_policy(SET CMP0028 OLD)
-#cmake_policy(SET CMP0020 OLD)
-#cmake_policy(SET CMP0043 OLD)
-project(blab)
+project(blab VERSION 0.0.1)
 
 set(${PROJECT_NAME}_VERSION_MAJOR 0 CACHE STRING "blab major version number." FORCE)
 set(${PROJECT_NAME}_VERSION_MINOR 0 CACHE STRING "blab minor version number." FORCE)

@@ -9,7 +9,7 @@ blFinderTutorialView::blFinderTutorialView(QWidget *parent)
 
     QPushButton *openToolButton = new QPushButton(tr("Open"), this);
     openToolButton->setObjectName("btnPrimary");
-    m_webView = new QWebView(this);
+    m_webView = new QWebEngineView(this);
 
     thisLayout->addWidget(openToolButton, 1, Qt::AlignLeft);
     thisLayout->addWidget(m_webView);

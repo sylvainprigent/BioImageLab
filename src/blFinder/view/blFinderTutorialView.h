@@ -3,7 +3,7 @@
 #include <QtWidgets>
 #include "blFinderExport.h"
 #include "../model/blFinderTutorialInfo.h"
-#include <QtWebKitWidgets/QWebView>
+#include <QtWebEngineWidgets/QWebEngineView>
 
 class BLFINDER_EXPORT blFinderTutorialView : public QWidget
 {
@@ -21,7 +21,7 @@ private slots:
     void emitOpenTool();
 
 private:
-   QWebView *m_webView;
+   QWebEngineView *m_webView;
 
 private:
    QString m_xmlFile;

@@ -17,15 +17,15 @@ void blToolDocWidget::loadPage(QString page){
 }
 
 void blToolDocWidget::setPageStyleSheet(QString cssFile){
-    QWebSettings * settings = m_htmlPage->webView()->settings();
+    QWebEngineSettings * settings = m_htmlPage->webView()->settings();
     QUrl myCssFileURL = QUrl::fromLocalFile(cssFile);
     qDebug() << "css url = " << myCssFileURL ;
 
-    m_htmlPage->webView()->settings()->setAttribute(QWebSettings::LocalContentCanAccessRemoteUrls, true);
-    m_htmlPage->webView()->page()->settings()->setAttribute(QWebSettings::JavascriptEnabled, true);
-    m_htmlPage->webView()->page()->settings()->setAttribute(QWebSettings::OfflineWebApplicationCacheEnabled, true);
-    m_htmlPage->webView()->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
-    settings->setUserStyleSheetUrl(myCssFileURL);
+    m_htmlPage->webView()->settings()->setAttribute(QWebEngineSettings::LocalContentCanAccessRemoteUrls, true);
+    m_htmlPage->webView()->page()->settings()->setAttribute(QWebEngineSettings::JavascriptEnabled, true);
+    //m_htmlPage->webView()->page()->settings()->setAttribute(QWebEngineSettings::OfflineWebApplicationCacheEnabled, true);
+    //m_htmlPage->webView()->page()->setLinkDelegationPolicy(QWebEnginePage::DelegateAllLinks);
+    //settings->setUserStyleSheetUrl(myCssFileURL);
 }
 
 

@@ -69,13 +69,14 @@ SET(SRCS_FILES
 ## #################################################################
 add_library(${PROJECT_NAME} ${SRCS_FILES} ${HEADERS_FILES} ${TEMPLATES_FILES})
 set_target_properties(${PROJECT_NAME} PROPERTIES LINKER_LANGUAGE CXX)
-target_link_libraries( ${PROJECT_NAME} blCore blToolCore blWidgets Qt5::Sql Qt5::Xml Qt5::WebKit Qt5::WebKitWidgets Qt5::Widgets)
+target_link_libraries( ${PROJECT_NAME} blCore blToolCore blWidgets Qt5::Sql Qt5::Xml Qt5::WebEngineWidgets Qt5::Widgets)
 
 ## #################################################################
 ## Export header file
 ## #################################################################
 
-add_compiler_export_flags()
+set(CMAKE_CXX_VISIBILITY_PRESET hidden)
+set(CMAKE_VISIBILITY_INLINES_HIDDEN 1)
 
 generate_export_header(${PROJECT_NAME}
   EXPORT_FILE_NAME "${PROJECT_NAME}Export.h")
