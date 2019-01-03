@@ -10,10 +10,11 @@
 #include "blProject/model/blProjectAccess.h"
 #include <QVBoxLayout>
 
-blProjectBrowserWidget::blProjectBrowserWidget(bool useNewProjectIcone, QWidget *parent) :
+blProjectBrowserWidget::blProjectBrowserWidget(bool useNewProjectIcone, bool useEmptyWidget, QWidget *parent) :
     QWidget(parent)
 {
     m_useNewProjectIcone = useNewProjectIcone;
+    m_useEmptyWidget = useEmptyWidget;
     createWidget();
 }
 
@@ -32,7 +33,7 @@ void blProjectBrowserWidget::createWidget(){
 
     blProjectAccess* projectDatabase = blProjectAccess::instance();
     QList<blProjectInfo*> projectsInfo = projectDatabase->database()->allProjects();
-    m_table = new blProjectBrowserWidgetList(projectsInfo, this);
+    m_table = new blProjectBrowserWidgetList(projectsInfo, this, m_useEmptyWidget);
 
     layout->addWidget(m_table);
     this->setLayout(layout);

@@ -26,7 +26,7 @@ void blProjectDatabase::setDatabaseFile(QString databaseFile){
 }
 
 void blProjectDatabase::connect(){
-    m_connectionName = "name" + QString::number(rand());
+    m_connectionName = "project" + QString::number(rand());
 
     // load database
     m_db = QSqlDatabase::addDatabase("QSQLITE", m_connectionName);
@@ -46,10 +46,14 @@ void blProjectDatabase::connect(){
 // queries
 void blProjectDatabase::createDatabase(){
 
+    qDebug()<< "Project createdatabase begin";
+
     QString projectsTable =
             QString("CREATE TABLE IF NOT EXISTS projects (") +
             QString("id INTEGER NULL , ") +
             QString("name VARCHAR(100) NULL , ") +
+            QString("description TEXT NULL , ") +
+            QString("id_type INTEGER NULL , ") +
             QString("url VARCHAR(400) NULL , ") +
             QString("created_date VARCHAR(100) NULL , ") +
             QString("modified_date VARCHAR(100) NULL , ") +
@@ -59,15 +63,21 @@ void blProjectDatabase::createDatabase(){
 
     QSqlQuery query(m_db);
     query.prepare(projectsTable);
-    query.exec();
+    if(!query.exec()){
+        qDebug() << "Cannot create the database";
+    }
+    qDebug()<< "Project createdatabase end";
 }
 
 bool blProjectDatabase::addProject(blProjectInfo* projectInfo){
 
+    qDebug() << "add project begin";
     QSqlQuery query(m_db);
-    query.prepare( QString( "INSERT INTO projects(name, url, created_date, modified_date)") +
-                   QString( "VALUES (:name, :url, :created_date, :modified_date)") );
+    query.prepare( QString( "INSERT INTO projects(name, description, id_type, url, created_date, modified_date)") +
+                   QString( "VALUES (:name, :description, :id_type, :url, :created_date, :modified_date)") );
     query.bindValue(":name", projectInfo->name());
+    query.bindValue(":description", projectInfo->description());
+    query.bindValue(":id_type", projectInfo->typeId());
     query.bindValue(":url", projectInfo->url());
     query.bindValue(":created_date", projectInfo->createdDate());
     query.bindValue(":modified_date", projectInfo->lastModifiedDate());
@@ -82,10 +92,36 @@ bool blProjectDatabase::addProject(blProjectInfo* projectInfo){
             return true;
         }
         else{
+            qDebug() << "add project return false cannot find the new added project";
             return false;
         }
     }
+    qDebug() << "add project return false cannot add project";
     return false;
+}
+
+bool blProjectDatabase::editProject(blProjectInfo* projectInfo){
+    qDebug() << "edit project begin";
+    if(projectInfo->id() == 0){
+        return this->addProject(projectInfo);
+    }
+    else{
+        return this->updateProject(projectInfo);
+    }
+    qDebug() << "edit project end";
+}
+
+bool blProjectDatabase::updateProject(blProjectInfo* projectInfo){
+    QSqlQuery query(m_db);
+    query.prepare("UPDATE projects SET name=?, description=?, id_type=?, url=?, created_date=?, modified_date=? WHERE id=?");
+    query.addBindValue(projectInfo->name());
+    query.addBindValue(projectInfo->description());
+    query.addBindValue(projectInfo->typeId());
+    query.addBindValue(projectInfo->url());
+    query.addBindValue(projectInfo->createdDate());
+    query.addBindValue(projectInfo->lastModifiedDate());
+    query.addBindValue(projectInfo->id());
+    return query.exec();
 }
 
 QList<blProjectInfo*> blProjectDatabase::allProjects(){
@@ -98,9 +134,11 @@ QList<blProjectInfo*> blProjectDatabase::allProjects(){
         blProjectInfo *info = new blProjectInfo;
         info->setId( query.value(0).toInt() );
         info->setName( query.value(1).toString() );
-        info->setUrl( query.value(2).toString() );
-        info->setCreatedDate( query.value(3).toString() );
-        info->setLastModifiedDate( query.value(4).toString() );
+        info->setDescription(query.value(2).toString());
+        info->setTypeId(query.value(3).toInt());
+        info->setUrl( query.value(4).toString() );
+        info->setCreatedDate( query.value(5).toString() );
+        info->setLastModifiedDate( query.value(6).toString() );
         projectList.append(info);
     }
     return projectList;
@@ -123,9 +161,11 @@ blProjectInfo* blProjectDatabase::findProjectById(unsigned int id){
         blProjectInfo *info = new blProjectInfo;
         info->setId( query.value(0).toInt() );
         info->setName( query.value(1).toString() );
-        info->setUrl( query.value(2).toString() );
-        info->setCreatedDate( query.value(3).toString() );
-        info->setLastModifiedDate( query.value(4).toString() );
+        info->setDescription(query.value(2).toString());
+        info->setUrl( query.value(3).toString() );
+        info->setTypeId(query.value(4).toInt());
+        info->setCreatedDate( query.value(5).toString() );
+        info->setLastModifiedDate( query.value(6).toString() );
         return info;
     }
     else{
@@ -142,9 +182,11 @@ blProjectInfo* blProjectDatabase::findProjectByName(QString name){
         blProjectInfo *info = new blProjectInfo;
         info->setId( query.value(0).toInt() );
         info->setName( query.value(1).toString() );
-        info->setUrl( query.value(2).toString() );
-        info->setCreatedDate( query.value(3).toString() );
-        info->setLastModifiedDate( query.value(4).toString() );
+        info->setDescription(query.value(2).toString());
+        info->setUrl( query.value(3).toString() );
+        info->setTypeId(query.value(4).toInt());
+        info->setCreatedDate( query.value(5).toString() );
+        info->setLastModifiedDate( query.value(6).toString() );
         return info;
     }
     else{

@@ -29,5 +29,6 @@ void blProjectAccess::load(){
 
 // getters
 blProjectDatabase *blProjectAccess::database(){
+    m_database->connect();
     return m_database;
 }

@@ -8,7 +8,7 @@
 
 #pragma once
 
-#include "blProjectnewExport.h"
+#include "blProjectExport.h"
 #include <QWidget>
 #include "blProjectBrowserWidgetToolBar.h"
 #include "blProjectBrowserWidgetList.h"
@@ -16,14 +16,14 @@
 /// \class blProjectBrowserWidget
 /// \brief Widget that shows the list of project
 /// and a tool bar to create a new project
-class BLPROJECTNEW_EXPORT blProjectBrowserWidget : public QWidget
+class BLPROJECT_EXPORT blProjectBrowserWidget : public QWidget
 {
     Q_OBJECT
 public:
     /// \fn explicit blProjectBrowserWidget(QWidget *parent = 0);
     /// \brief Constructor
     /// \param[in] parent Qt parent systeme
-    explicit blProjectBrowserWidget(bool useNewProjectIcone = true, QWidget *parent = 0);
+    explicit blProjectBrowserWidget(bool useNewProjectIcone = true, bool useEmptyWidget = true, QWidget *parent = 0);
     
 signals:
     /// \fn void askNewProject();
@@ -53,4 +53,5 @@ private:
     blProjectBrowserWidgetToolBar *m_toolbar; ///< tool bar
     blProjectBrowserWidgetList *m_table; ///< table to view project list
     bool m_useNewProjectIcone; ///< true to add the "new project" button
+    bool m_useEmptyWidget;
 };

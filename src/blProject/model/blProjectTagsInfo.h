@@ -11,17 +11,17 @@
 #include "blProjectExport.h"
 #include <QString>
 
-/// \class blProjectInfo
+/// \class blProjectTagsInfo
 /// \brief Contains the informations of a blProject
-class BLPROJECT_EXPORT blProjectInfo
+class BLPROJECT_EXPORT blProjectTagsInfo
 {
 public:
     /// \fn blProjectInfo();
     /// \brief Constructor
-    blProjectInfo();
+    blProjectTagsInfo();
     /// \fn ~blProjectInfo();
     /// \brief Destructor
-    ~blProjectInfo();
+    ~blProjectTagsInfo();
 
 public:
     // setters

@@ -7,9 +7,11 @@
 /// Copyright (C) BioimageLab 2015
 
 #include "blProjectInfo.h"
+#include <QDebug>
 
 blProjectInfo::blProjectInfo(){
     m_id = 0;
+    m_typeId = 1;
 }
 
 blProjectInfo::~blProjectInfo(){
@@ -38,6 +40,13 @@ void blProjectInfo::setLastModifiedDate(QString lastModifiedDate){
     m_lastModifiedDate = lastModifiedDate;
 }
 
+void blProjectInfo::setDescription(QString description){
+    m_description = description;
+}
+
+void blProjectInfo::setTypeId(int typeId){
+    m_typeId = typeId;
+}
 
 // getters
 unsigned int blProjectInfo::id(){
@@ -58,4 +67,25 @@ QString blProjectInfo::createdDate(){
 
 QString blProjectInfo::lastModifiedDate(){
     return m_lastModifiedDate;
+}
+
+QString blProjectInfo::description(){
+    return m_description;
+}
+
+int blProjectInfo::typeId(){
+    return m_typeId;
+}
+
+void blProjectInfo::print(){
+
+    qDebug() << "project info:";
+    qDebug() << "id = " << m_id;
+    qDebug() << "name = " << m_name;
+    qDebug() << "description = " << m_description;
+    qDebug() << "typeId = " << m_typeId;
+    qDebug() << "url = " << m_url;
+    qDebug() << "createdDate = " << m_createdDate;
+    qDebug() << "lastModifiedDate = " << m_lastModifiedDate;
+
 }

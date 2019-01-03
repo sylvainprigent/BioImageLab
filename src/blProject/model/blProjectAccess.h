@@ -8,14 +8,14 @@
 
 #pragma once
 
-#include "blProjectnewExport.h"
+#include "blProjectExport.h"
 #include <blCore/blSingleton.h>
 #include "blProjectDatabase.h"
 
 /// \class blIndexationAccess
 /// \brief Singleton that allow to access the worflow
 /// index and database
-class BLPROJECTNEW_EXPORT blProjectAccess : public blSingleton<blProjectAccess>{
+class BLPROJECT_EXPORT blProjectAccess : public blSingleton<blProjectAccess>{
 
     friend class blSingleton<blProjectAccess>;
 

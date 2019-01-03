@@ -47,6 +47,8 @@ public:
     /// \brief Add a project to the database
     /// \param[in] blProjectInfo Project to add
     bool addProject(blProjectInfo* projectInfo);
+    bool editProject(blProjectInfo* projectInfo);
+    bool updateProject(blProjectInfo* projectInfo);
     /// \fn bool updateProjectURL(blProjectInfo* projectInfo);
     /// \brief Modify the URL of the project
     /// \param[in] projectInfo project to be updated

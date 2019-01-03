@@ -21,6 +21,7 @@ SET(HEADERS_FILES
     blSettings.h
     blSettingsGroups.h
     blSettingsAccess.h
+    blLocalFiles.h
 )
 
 SET(SRCS_FILES
@@ -28,6 +29,7 @@ SET(SRCS_FILES
     blSettings.cpp
     blSettingsGroups.cpp
     blSettingsAccess.cpp
+    blLocalFiles.cpp
 )
 
 ## #################################################################

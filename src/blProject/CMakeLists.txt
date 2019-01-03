@@ -15,71 +15,53 @@ project(blProject)
 ## Define files
 ## #################################################################
 SET(HEADERS_FILES
-    controller/blProjectWidget.cpp
+    controller/blProjectBrowserController.cpp
+    controller/blProjectController.cpp
     model/blProjectDatabase.cpp
     model/blProjectInfo.cpp
-    model/blProjectFolderFilter.cpp
-    model/blProjectFolderLabelExtractor.cpp
-    model/blFileSearch.cpp
-    model/blProjectModel.cpp
-    model/blProjectModelMainColumn.cpp
-    model/blProjectModelColumn.cpp
     model/blProjectAccess.cpp
-    model/blCreateMiniature.cpp
-    view/blProjectControler.cpp
+    model/blProjectTypes.cpp
+    model/blProjectTagsInfo.cpp
+    model/blProjectModel.cpp
+    model/blProjectIndex.cpp
+    model/blImportDataInfo.cpp
+    model/blMainColumnInfo.cpp
+    model/blSubColumnInfo.cpp
     view/blProjectBrowserWidget.cpp
     view/blProjectBrowserWidgetToolBar.cpp 
     view/blProjectBrowserWidgetList.cpp 
-    view/blProjectNewFormWidget.cpp
-    view/blProjectNewFormWidgetLabel.cpp 
-    view/blProjectNewFormWidgetImport.cpp 
-    view/blProjectNewFormWidgetFilter.cpp
-    view/blProjectNewFormWidgetDescription.cpp 
-    view/blProjectNewFormWidgetFilterSingle.cpp 
-    view/blProjectView.cpp
-    view/blProjectViewColumn.cpp
-    view/blProjectViewColumnSelector.cpp 
-    view/blProjectViewColumnParameters.cpp
-    view/blProjectViewColumnHeader.cpp
-    view/blProjectViewTab.cpp 
-    view/blProjectAddImageWidget.cpp
-    view/blProjectSplitLabelWidget.cpp
-    view/blProjectLabelSplitter.cpp
-    view/blProjectAddRemoveSubColumnWidget.cpp
+    view/blProjectInfoForm.cpp
+    view/blProjectImportConditionalView.cpp
+    view/blTagsWidget.cpp
+    view/blProjectDataView.cpp
+    view/HierarchicalHeaderView.cpp
+    model/blTagsInfo.cpp
+    model/blDataInfo.cpp
 )
 
 SET(SRCS_FILES
-    controller/blProjectWidget.h
+    controller/blProjectBrowserController.h
+    controller/blProjectController.h
     model/blProjectDatabase.h
     model/blProjectInfo.h
-    model/blProjectFolderFilter.h
-    model/blProjectFolderLabelExtractor.h
-    model/blFileSearch.h
-    model/blProjectModel.h
-    model/blProjectModelMainColumn.h
-    model/blProjectModelColumn.h
     model/blProjectAccess.h
-    model/blCreateMiniature.h
-    view/blProjectControler.h
+    model/blProjectTypes.h
+    model/blProjectModel.h
+    model/blProjectTagsInfo.h
+    model/blProjectIndex.h
+    model/blImportDataInfo.h
     view/blProjectBrowserWidget.h
     view/blProjectBrowserWidgetToolBar.h 
     view/blProjectBrowserWidgetList.h 
-    view/blProjectNewFormWidget.h
-    view/blProjectNewFormWidgetLabel.h 
-    view/blProjectNewFormWidgetImport.h 
-    view/blProjectNewFormWidgetFilter.h
-    view/blProjectNewFormWidgetDescription.h 
-    view/blProjectNewFormWidgetFilterSingle.h 
-    view/blProjectView.h
-    view/blProjectViewColumn.h
-    view/blProjectViewColumnSelector.h 
-    view/blProjectViewColumnParameters.h
-    view/blProjectViewColumnHeader.h
-    view/blProjectViewTab.h 
-    view/blProjectAddImageWidget.h
-    view/blProjectSplitLabelWidget.h
-    view/blProjectLabelSplitter.h
-    view/blProjectAddRemoveSubColumnWidget.h
+    view/blProjectInfoForm.h
+    model/blMainColumnInfo.h
+    model/blSubColumnInfo.h
+    view/blProjectImportConditionalView.h
+    view/blTagsWidget.h
+    view/blProjectDataView.h
+    view/HierarchicalHeaderView.h
+    model/blTagsInfo.h
+    model/blDataInfo.h
 )
 
 ## #################################################################
@@ -93,7 +75,8 @@ target_link_libraries( ${PROJECT_NAME} blCore blToolCore blWidgets Qt5::Sql Qt5:
 ## Export header file
 ## #################################################################
 
-add_compiler_export_flags()
+set(CMAKE_CXX_VISIBILITY_PRESET hidden)
+set(CMAKE_VISIBILITY_INLINES_HIDDEN 1)
 
 generate_export_header(${PROJECT_NAME}
   EXPORT_FILE_NAME "${PROJECT_NAME}Export.h")

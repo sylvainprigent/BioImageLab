@@ -8,7 +8,7 @@
 
 #pragma once
 
-#include "blProjectnewExport.h"
+#include "blProjectExport.h"
 #include "blProject/model/blProjectInfo.h"
 
 #include <QWidget>
@@ -16,14 +16,14 @@
 
 /// \class blProjectBrowserWidgetList
 /// \brief Widget that shows the projects as a list
-class BLPROJECTNEW_EXPORT blProjectBrowserWidgetList : public QWidget
+class BLPROJECT_EXPORT blProjectBrowserWidgetList : public QWidget
 {
     Q_OBJECT
 public:
     /// \fn explicit blProjectBrowserWidgetList(QWidget *parent = 0);
     /// \brief COnstructor
     /// \param[in] parent Qt parent system
-    explicit blProjectBrowserWidgetList(QList<blProjectInfo *> &projects, QWidget *parent = 0);
+    explicit blProjectBrowserWidgetList(QList<blProjectInfo *> &projects, QWidget *parent = 0, bool useEmptyWidget = true);
     
 signals:
     /// \fn void askOpenProject(blProjectInfo* info);
