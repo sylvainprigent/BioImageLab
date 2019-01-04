@@ -29,9 +29,10 @@ void initialiseSettings(QString distDir, QString settingsFile, QString themesDir
     }
 
     QString projectsDir = groups->value("Project", "Data Directory", true);
-    if (projectsDir.isEmpty()){
-        groups->set("Project", "Data Directory", distDir + "projects" + QDir::separator());
+    if (projectsDatabaseFile.isEmpty()){
+        groups->set("Project", "Database Directory", distDir + "projects" + QDir::separator());
     }
+
     settingsAccess->save();
 }
 
@@ -42,8 +43,8 @@ void initialiseProjectsDatbase(QString distDir){
     projectAccess->load();
 
     // storage directory
-    QString projectDirName = distDir + QDir::separator() + "projects";
-    QDir projectsDir;
+    QString projectDirName = distDir + "projects" + QDir::separator();
+    QDir projectsDir(projectDirName);
     if (!projectsDir.exists()){
         projectsDir.mkdir(projectDirName);
     }

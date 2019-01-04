@@ -1,0 +1,4 @@
+#include "../src/blProjectEditor/controller/blProjectEditorController.h"
+#include "../src/blProjectEditor/controller/blProjectNewController.h"
+#include "../src/blProjectEditor/view/blProjectEditorWidget.h"
+#include "../src/blProjectEditor/view/blProjectEditorInfoWidget.h"

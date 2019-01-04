@@ -1,0 +1,4 @@
+#include "../src/blProjectCore/model/blProjectAccess.h"
+#include "../src/blProjectCore/model/blProjectInfo.h"
+#include "../src/blProjectCore/model/blProjectDatabase.h"
+

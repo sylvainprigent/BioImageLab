@@ -57,7 +57,6 @@ void blProjectBrowserWidgetList::addProjects(QList<blProjectInfo*> &projects){
         item1->setObjectName("blProjectDatabaseButton");
         m_table->setCellWidget(idx, 0, item1);
 
-
         QTableWidgetItem *item2 = new QTableWidgetItem(projects[i]->name());
         item2->setFlags(item2->flags() ^ Qt::ItemIsEditable);
         m_table->setItem(idx,1, item2 );
@@ -66,24 +65,21 @@ void blProjectBrowserWidgetList::addProjects(QList<blProjectInfo*> &projects){
         item3->setFlags(item3->flags() ^ Qt::ItemIsEditable);
         m_table->setItem(idx,2, item3 );
 
-        QTableWidgetItem *item4 = new QTableWidgetItem(projects[i]->typeId());
-        item4->setFlags(item4->flags() ^ Qt::ItemIsEditable);
-        m_table->setItem(idx,3, item4 );
-
         QTableWidgetItem *item5 = new QTableWidgetItem(projects[i]->createdDate());
         item5->setFlags(item5->flags() ^ Qt::ItemIsEditable);
-        m_table->setItem(idx,4, item5);
+        m_table->setItem(idx,3, item5);
 
         QTableWidgetItem *item6 = new QTableWidgetItem(projects[i]->lastModifiedDate());
         item6->setFlags(item6->flags() ^ Qt::ItemIsEditable);
-        m_table->setItem(idx,5, item6);
+        m_table->setItem(idx,4, item6);
 
         blButtonId *item7 = new blButtonId("", this);
         item7->setId(idx);
         connect(item7, SIGNAL(clicked(int)), this, SLOT(deleteProject(int)));
         item7->setFixedSize(30,30);
         item7->setObjectName("blProjectTrashButton");
-        m_table->setCellWidget(idx, 6, item7);
+        m_table->setCellWidget(idx, 5, item7);
+        m_table->setRowHeight(idx, 32);
     }
 }
 
@@ -93,7 +89,7 @@ void blProjectBrowserWidgetList::createTable(){
     layout->setContentsMargins(0,0,0,0);
     this->setLayout(layout);
 
-    m_table = new QTableWidget(0,7,this);
+    m_table = new QTableWidget(0,6,this);
     m_table->verticalHeader()->setVisible(false);
     m_table->horizontalHeader()->setStretchLastSection(true);
     //m_table->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
@@ -102,7 +98,6 @@ void blProjectBrowserWidgetList::createTable(){
     headerLabels.append("");
     headerLabels.append(tr("Name"));
     headerLabels.append(tr("Description"));
-    headerLabels.append(tr("Type"));
     headerLabels.append(tr("Created in"));
     headerLabels.append(tr("Last modified"));
     headerLabels.append(tr(""));
@@ -113,7 +108,8 @@ void blProjectBrowserWidgetList::createTable(){
     item->setIcon(*(new QIcon("theme/folder.png")));
     m_table->setHorizontalHeaderItem(0,item);
     m_table->setColumnWidth(0, 32);
-    m_table->setColumnWidth(6, 32);
+    m_table->setColumnWidth(5, 32);
+
 
     connect(m_table, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(emitCellDoubleClicked(int, int)));
     connect(m_table, SIGNAL(cellClicked(int,int)), this, SLOT(emitCellClicked(int, int)));
@@ -167,6 +163,12 @@ void blProjectBrowserWidgetList::deleteProject(int r){
         if (answer == QMessageBox::Yes){
             m_rowTodelete = r;
             emit askDeleteProject(m_projects.at(r));
+
+            // remove the line
+            m_projects.removeAt(r);
+            freeProjectTable();
+            m_emptyListWidget->setVisible(false);
+            addProjects(m_projects);
         }
     }
 }

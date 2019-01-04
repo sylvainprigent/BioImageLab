@@ -1,0 +1,4 @@
+#include "../src/blProjectBrowser/controller/blProjectBrowserController.h"
+#include "../src/blProjectBrowser/view/blProjectBrowserWidget.h"
+#include "../src/blProjectBrowser/view/blProjectBrowserWidgetList.h"
+#include "../src/blProjectBrowser/view/blProjectBrowserWidgetToolBar.h"

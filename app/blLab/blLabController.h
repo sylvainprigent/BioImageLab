@@ -1,8 +1,16 @@
+/// \file blLabController.h
+/// \brief blLabController
+/// \author Sylvain Prigent
+/// \version 0.1
+/// \date 2019
+///
+/// Copyright (C) BioimageLab 2019
+
 #pragma once
 
 #include <QtWidgets>
 #include <blHome>
-#include <blProject>
+#include <blProjectCore>
 
 class blLabController : public QWidget
 {
@@ -26,6 +34,7 @@ private slots:
     void openTool(QString xmlUrl);
     void newProject();
     void openProject(blProjectInfo* projectInfo);
+    void openNewProject(blProjectInfo* projectInfo);
 
 private:
     void initialize(QString settingsUrl);
@@ -38,8 +47,8 @@ private:
 
 private:
     int m_settingIndex;
-    int m_communityIndex;
     QString m_settingsUrl;
     QString m_iconsDir;
     int m_projectsIndex;
+    int m_newProjectIndex;
 };

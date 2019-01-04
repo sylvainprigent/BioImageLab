@@ -11,15 +11,15 @@
 #include <QWidget>
 #include <QTableWidget>
 
-#include "../model/blProjectInfo.h"
+#include <blProjectCore>
 #include "../view/blProjectBrowserWidget.h"
 
-#include "blProjectExport.h"
+#include "blProjectBrowserExport.h"
 
 /// \class blProjectWidget
 /// \brief Widget organized with tab that contains
 /// the projects widgets
-class BLPROJECT_EXPORT blProjectBrowserController : public QWidget{
+class BLPROJECTBROWSER_EXPORT blProjectBrowserController : public QWidget{
     Q_OBJECT
     
 public:
@@ -34,5 +34,11 @@ public:
 signals:
     void askOpenProject(blProjectInfo *projectInfo);
     void askNewProject();
+
+public slots:
+    void deleteProject(blProjectInfo* project);
+
+protected:
+    blProjectBrowserWidget* m_projectBrowserWidget;
 
 };

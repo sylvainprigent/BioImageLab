@@ -12,7 +12,7 @@
 #include "blWidgetsExport.h"
 
 /// \class blHoverableWidget
-/// \brief Widget than can display an other widget (a khHoverWidget)
+/// \brief Widget than can display an other widget (a blHoverWidget)
 /// hover itself
 class BLWIDGETS_EXPORT blHoverableWidget : public QWidget
 {

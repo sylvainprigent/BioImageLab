@@ -1,3 +1,11 @@
+/// \file blLabController.cpp
+/// \brief blLabController
+/// \author Sylvain Prigent
+/// \version 0.1
+/// \date 2019
+///
+/// Copyright (C) BioimageLab 2019
+
 #include "blLabController.h"
 
 #include <blFinder>
@@ -5,8 +13,8 @@
 #include <blTool>
 #include <blCore>
 
-#include "blProject/controller/blProjectBrowserController.h"
-#include "blProject/controller/blProjectController.h"
+#include <blProjectBrowser>
+#include <blProjectEditor>
 
 blLabController::blLabController(QString settingsUrl, QString iconsDir, QWidget *parent) : QWidget(parent)
 {
@@ -31,7 +39,8 @@ blLabController::blLabController(QString settingsUrl, QString iconsDir, QWidget 
 
     this->addHomeButton();
     m_settingIndex = -1;
-    m_communityIndex = -1;
+    m_newProjectIndex = -1;
+    m_projectsIndex = -1;
 
     // connections
     connect(m_bar, SIGNAL(open(int)), this, SLOT(showTab(int)));
@@ -49,8 +58,6 @@ void blLabController::addHomeButton(){
     home->addTile("Applications", infoHubZero);
     blHomeTileInfo infoFinder("blFinder", "Finder", "finder", m_iconsDir + QDir::separator() + "search_neg.png");
     home->addTile("Applications", infoFinder);
-    blHomeTileInfo infoFinderAdmin("blFinderAdmin", "Finder admin", "finderAdmin", m_iconsDir + QDir::separator() + "search_neg.png");
-    home->addTile("Applications", infoFinderAdmin);
     blHomeTileInfo infoSettings("blSettings", "Settings", "settings", m_iconsDir + QDir::separator() + "settings.png");
     home->addTile("Applications", infoSettings);
     m_centralWidget->addWidget(home);
@@ -73,6 +80,10 @@ void blLabController::closeTab(int id){
     if (m_settingIndex == id){
         m_settingIndex = -1;
     }
+    if (m_projectsIndex == id){
+        m_projectsIndex = -1;
+    }
+
     m_bar->removeButton(id);
     delete m_centralWidget->widget(id);
 }
@@ -114,7 +125,7 @@ void blLabController::openApp(blHomeTileInfo info){
 
     }
     else if (info.name() == "Projects"){
-        if (m_projectsIndex > 0){
+        if (m_projectsIndex >= 0){
             m_bar->setButtonChecked(m_projectsIndex, false);
             m_centralWidget->slideInIdx(m_projectsIndex);
             return;
@@ -127,20 +138,6 @@ void blLabController::openApp(blHomeTileInfo info){
             m_centralWidget->addWidget(projectsBrowser);
             m_bar->addButton(info.iconeUrl(), info.name(), m_centralWidget->count()-1, true);
         }
-    }
-    else if (info.name() == "Finder admin"){
-
-        // initialize the database
-        blFinderAccess *database = blFinderAccess::instance();
-        blSettingsGroups settings;
-        settings.load(m_settingsUrl);
-        database->setDatabaseFile(settings.value("Finder", "Database URL"));
-        database->load();
-
-        blFinderAdminDefaultWidget *finderAdmin = new blFinderAdminDefaultWidget(this);
-        m_centralWidget->addWidget(finderAdmin);
-        m_bar->addButton(info.iconeUrl(), info.name(), m_centralWidget->count()-1, true);
-
     }
     else{
         // add widget
@@ -208,16 +205,32 @@ void blLabController::saveSettings(blSettingsGroups *settings){
 
 void blLabController::newProject(){
 
-    blProjectController *projectController = new blProjectController(this);
-    m_centralWidget->addWidget(projectController);
-    m_bar->addButton(m_iconsDir + QDir::separator() + "project.png", "Opened Project", m_centralWidget->count()-1, true);
-    m_centralWidget->slideInIdx(m_centralWidget->count()-1);
-    m_bar->setButtonChecked(m_centralWidget->count()-1, false);
+    if (m_newProjectIndex >= 0){
+        m_centralWidget->slideInIdx(m_newProjectIndex);
+        m_bar->setButtonChecked(m_newProjectIndex, false);
+    }
+    else{
+        blProjectNewController *projectNewController = new blProjectNewController(this);
+        m_centralWidget->addWidget(projectNewController);
+        m_bar->addButton(m_iconsDir + QDir::separator() + "project.png", "New Project", m_centralWidget->count()-1, true);
+        m_centralWidget->slideInIdx(m_centralWidget->count()-1);
+        m_bar->setButtonChecked(m_centralWidget->count()-1, false);
+        m_newProjectIndex = m_centralWidget->count()-1;
+
+        connect(projectNewController, SIGNAL(projectCreated(blProjectInfo*)), this, SLOT(openNewProject(blProjectInfo*)));
+    }
+
+}
+
+void blLabController::openNewProject(blProjectInfo* projectInfo){
+
+    this->closeTab(m_newProjectIndex);
+    m_newProjectIndex = -1;
+    this->openProject(projectInfo);
 }
 
 void blLabController::openProject(blProjectInfo* projectInfo){
-    blProjectController *projectController = new blProjectController(this);
-    projectController->openProject(projectInfo);
+    blProjectEditorController *projectController = new blProjectEditorController(projectInfo, this);
 
     m_centralWidget->addWidget(projectController);
     m_bar->addButton(m_iconsDir + QDir::separator() + "project.png", "Opened Project", m_centralWidget->count()-1, true);
