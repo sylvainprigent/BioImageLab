@@ -9,10 +9,13 @@
 #include "blProjectNewController.h"
 #include "blProjectCore/model/blProjectAccess.h"
 #include "blProjectEditor/view/blProjectEditorInfoWidget.h"
+#include "blCore/blSettingsAccess.h"
 
 #include <QVBoxLayout>
 
-blProjectNewController::blProjectNewController(QWidget *parent) : QWidget(parent){
+blProjectNewController::blProjectNewController(QString projectsDir, QWidget *parent) : QWidget(parent){
+
+    m_projectsDir = projectsDir;
 
     QVBoxLayout *layout = new QVBoxLayout;
     layout->setContentsMargins(0,0,0,0);
@@ -36,7 +39,20 @@ void blProjectNewController::createProject(blProjectInfo* projectInfo){
     projectInfo->setCreatedDate(dateNowString);
     projectInfo->setLastModifiedDate(dateNowString);
     if ( blProjectAccess::instance()->database()->addProject(projectInfo) ){
-        emit projectCreated(projectInfo);
+
+        QString projectDirPath = m_projectsDir + QDir::separator() + "project_" + QString::number(projectInfo->id());
+        //qDebug() << "create project m_projectsDir: " << m_projectsDir;
+        //qDebug() << "create project directory: " << projectDirPath;
+        QDir projectDir(projectDirPath);
+        projectInfo->setUrl(projectDirPath);
+        if ( projectDir.mkdir(projectDirPath) ){
+            blProjectAccess::instance()->database()->editProject(projectInfo);
+            emit projectCreated(projectInfo);
+        }
+        else{
+            QMessageBox::information(this, tr("Error"), tr("Cannot create the project directory: ") + projectDirPath);
+        }
+
     }
     else{
         QMessageBox::information(this, tr("Error"), tr("Cannot create the project in the database"));

@@ -26,6 +26,14 @@ void blProjectTag::setName(QString name){
     m_name = name;
 }
 
+unsigned int blProjectTag::id(){
+    return m_id;
+}
+
+QString blProjectTag::name(){
+    return m_name;
+}
+
 void blProjectTag::print(){
     qDebug() << "tag info:";
     qDebug() << "id = " << m_id;

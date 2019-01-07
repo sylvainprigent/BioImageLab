@@ -30,7 +30,7 @@ void initialiseSettings(QString distDir, QString settingsFile, QString themesDir
 
     QString projectsDir = groups->value("Project", "Data Directory", true);
     if (projectsDatabaseFile.isEmpty()){
-        groups->set("Project", "Database Directory", distDir + "projects" + QDir::separator());
+        groups->set("Project", "Data Directory", distDir + "projects" + QDir::separator());
     }
 
     settingsAccess->save();
@@ -41,6 +41,7 @@ void initialiseProjectsDatbase(QString distDir){
     blProjectAccess *projectAccess = blProjectAccess::instance();
     projectAccess->setDatabaseFile(distDir + QDir::separator() + "projects.db");
     projectAccess->load();
+    projectAccess->database()->viewDatabase();
 
     // storage directory
     QString projectDirName = distDir + "projects" + QDir::separator();

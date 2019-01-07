@@ -14,6 +14,8 @@
 
 #include "blProjectEditor/view/blProjectEditorWidget.h"
 #include "blProjectEditor/view/blProjectEditorInfoWidget.h"
+#include "blProjectEditor/view/blProjectEditorTagsWidget.h"
+#include "blProjectEditor/view/blProjectEditorImportWidget.h"
 #include "blProjectCore/model/blProjectInfo.h"
 
 /// \class blProjectWidget
@@ -39,11 +41,26 @@ private:
     void createWidgets(blProjectInfo *projectInfo);
 
 private slots:
+    // project informations
     void showInfo();
     void editProjectInfo(blProjectInfo* projectInfo);
+
+    // project tags
+    void showTags();
+    void addTag(blProjectTag *tag);
+    void removeTag(blProjectTag *tag);
+
+    // project import
+    void showImport();
+    void importData(blProjectData *data);
 
 protected:
     blProjectEditorWidget* m_projectEditorWidget;
     blProjectEditorInfoWidget* m_porjectEditorInfo;
+    blProjectEditorTagsWidget* m_projectEditorTags;
+    blProjectEditorImportWidget* m_projectEditorImport;
+
+private:
+    blProjectInfo* m_projectInfo;
 
 };

@@ -1239,6 +1239,11 @@ QWidget#blProjectEditorInfoWidget{
   background-color: #ffffff;
 }
 
+QWidget#blProjectEditorImportWidget{
+  background-color: #ffffff;
+}
+
+
 QLabel#blProjectEditorToolbarWidgetTitle{
   font-size: 20px;
 }

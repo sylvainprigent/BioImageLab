@@ -2,7 +2,7 @@
 #
 # $Id$
 #
-# Copyright (c) bioImageLab 2015
+# Copyright (c) bioImageLab 2019
 #
 # AUTHOR:
 # Sylvain Prigent
@@ -23,8 +23,13 @@ SET(HEADERS_FILES
     view/blProjectEditorTableWidget.h
     view/blProjectEditorFooterWidget.h
     view/blProjectEditorTagsWidget.h
+    view/blProjectEditorTagWidget.h
+    view/blProjectEditorImportWidget.h
     model/blProjectTag.h
-    model/blProjectTagDatabase.h
+    model/blProjectData.h
+    model/blProjectDataModel.h
+    model/blProjectEditorDatabase.h
+    model/blProjectEditorAccess.h
 )
 
 SET(SRCS_FILES
@@ -36,8 +41,13 @@ SET(SRCS_FILES
     view/blProjectEditorTableWidget.cpp
     view/blProjectEditorFooterWidget.cpp
     view/blProjectEditorTagsWidget.cpp
+    view/blProjectEditorTagWidget.cpp
+    view/blProjectEditorImportWidget.cpp
     model/blProjectTag.cpp
-    model/blProjectTagDatabase.cpp
+    model/blProjectData.cpp
+    model/blProjectDataModel.cpp
+    model/blProjectEditorDatabase.cpp
+    model/blProjectEditorAccess.cpp
 )
 
 ## #################################################################

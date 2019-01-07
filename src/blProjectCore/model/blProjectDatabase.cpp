@@ -201,6 +201,18 @@ bool blProjectDatabase::removeProject(int id){
 }
 
 // view table
+void blProjectDatabase::viewDatabase(){
+
+    QStringList tabl=m_db.tables();
+    std::cout<< "Project database content :"<<std::endl;
+    for (int t=0 ; t<tabl.size() ; t++)
+    {
+        this->viewTable(tabl.at(t));
+        std::cout << std::endl;
+    }
+
+}
+
 void blProjectDatabase::viewTable(const QString tableName)
 {
     qDebug() << "blProjectDatabase::ViewTable ";

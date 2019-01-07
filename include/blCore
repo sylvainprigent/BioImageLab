@@ -1,3 +1,4 @@
+#include "../src/blCore/blException.h"
 #include "../src/blCore/blSettings.h"
 #include "../src/blCore/blSettingsGroups.h"
 #include "../src/blCore/blSettingsAccess.h"

@@ -22,7 +22,7 @@ public:
     /// \fn blProjectNewController(QWidget *parent = 0);
     /// \brief Constructor
     /// \param[in] parent Qt parent system
-    blProjectNewController(QWidget *parent = 0);
+    blProjectNewController(QString projectsDir, QWidget *parent = 0);
     /// \fn ~blProjectWidget();
     /// \brief Destructor
     ~blProjectNewController();
@@ -33,5 +33,6 @@ signals:
 private slots:
     void createProject(blProjectInfo* projectInfo);
 
-
+private:
+    QString m_projectsDir;
 };

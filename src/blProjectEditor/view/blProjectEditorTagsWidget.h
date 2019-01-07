@@ -10,6 +10,7 @@
 
 #include "blProjectEditorExport.h"
 #include "blProjectCore/model/blProjectInfo.h"
+#include "blProjectEditor/model/blProjectTag.h"
 #include <QtWidgets>
 
 /// \class blProjectEditorTagsWidget
@@ -24,6 +25,19 @@ public:
     /// \param[in] parent Qt parent systeme
     explicit blProjectEditorTagsWidget(QWidget *parent = 0);
 
+signals:
+    void askAddTag(blProjectTag*);
+    void askRemoveTag(blProjectTag*);
+
+public slots:
+    void setTags(QList<blProjectTag*> tags);
+    void addTag(blProjectTag *tag);
+    void removeTag(blProjectTag *tag);
+
+private slots:
+    void emitAskAddTag();
+
 private:
     QLineEdit* m_addEdit;
+    QVBoxLayout* m_tagListLayout;
 };

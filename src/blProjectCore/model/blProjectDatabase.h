@@ -66,6 +66,7 @@ public:
 
 
 public:
+    void viewDatabase();
     /// \fn viewTable(const QString tableName = "projects");
     /// \brief Plot the table in the console for debug
     /// \param[in] tableName name of the table to view

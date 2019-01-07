@@ -210,7 +210,7 @@ void blLabController::newProject(){
         m_bar->setButtonChecked(m_newProjectIndex, false);
     }
     else{
-        blProjectNewController *projectNewController = new blProjectNewController(this);
+        blProjectNewController *projectNewController = new blProjectNewController(blSettingsAccess::instance()->settings()->value("Project", "Data Directory"), this);
         m_centralWidget->addWidget(projectNewController);
         m_bar->addButton(m_iconsDir + QDir::separator() + "project.png", "New Project", m_centralWidget->count()-1, true);
         m_centralWidget->slideInIdx(m_centralWidget->count()-1);
