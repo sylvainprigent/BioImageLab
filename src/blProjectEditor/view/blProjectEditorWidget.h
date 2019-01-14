@@ -39,6 +39,9 @@ signals:
 public slots:
     void setProjectInfo(blProjectInfo* projectInfo);
 
+public:
+    blProjectEditorTableWidget* table();
+
 protected:
     blProjectEditorToolbarWidget *m_toolbar;
     blProjectEditorTableWidget *m_table;

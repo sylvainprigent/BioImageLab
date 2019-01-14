@@ -13,6 +13,7 @@
 #include <qsqldatabase.h>
 #include "blProjectTag.h"
 #include "blProjectData.h"
+#include "blProjectContent.h"
 
 /// \class blProjectTagDatabase
 /// \brief manage a database containing a project tags
@@ -49,7 +50,7 @@ public:
 
     // tags
     blProjectTag* setTag(blProjectTag *tag);
-    QList<blProjectTag*> tags();
+    QList<blProjectTag*> getTags();
     QList<blProjectTag*> setTags(QList<blProjectTag*> tags);
     bool isTag(int id);
     QString tagName(int tagId);
@@ -57,7 +58,16 @@ public:
 
     // data
     blProjectData* setData(blProjectData* data);
+    QList<blProjectData*> getData();
     bool isData(int id);
+
+    // data tags
+    void setDataTag(int id_data, int id_tag, QString value);
+    blProjectTagValue* getDataTag(int id_data, int id_tag);
+    bool isDataTag(int id_data, int id_tag);
+
+    // content
+    blProjectContent* getContent();
 
 public:
     void viewDatabase();

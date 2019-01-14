@@ -550,6 +550,7 @@ QTableView {
 	selection-color: #000000;
 	gridline-color: #e1e1e1;
 	alternate-background-color: #f1f1f1;
+	border: 0px solid #ffffff;
 }
 
 QHeaderView::section {

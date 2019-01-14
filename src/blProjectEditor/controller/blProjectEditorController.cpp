@@ -25,6 +25,7 @@ blProjectEditorController::blProjectEditorController(blProjectInfo *projectInfo,
     projectDatabaseAccess->database()->viewDatabase();
 
     this->createWidgets(projectInfo);
+    this->loadContent();
 
     // info
     connect(m_projectEditorWidget, SIGNAL(askInfo()), this, SLOT(showInfo()));
@@ -42,6 +43,12 @@ blProjectEditorController::blProjectEditorController(blProjectInfo *projectInfo,
 
 blProjectEditorController::~blProjectEditorController(){
 
+}
+
+void blProjectEditorController::loadContent(){
+    blProjectContent *content = blProjectEditorAccess::instance()->database()->getContent();
+    content->print();
+    m_projectEditorWidget->table()->setContent(content);
 }
 
 void blProjectEditorController::createWidgets(blProjectInfo *projectInfo){
@@ -68,7 +75,7 @@ void blProjectEditorController::createWidgets(blProjectInfo *projectInfo){
 
     // tags editor
     m_projectEditorTags = new blProjectEditorTagsWidget();
-    m_projectEditorTags->setTags(blProjectEditorAccess::instance()->database()->tags());
+    m_projectEditorTags->setTags(blProjectEditorAccess::instance()->database()->getTags());
     m_projectEditorTags->setGeometry(
         QStyle::alignedRect(
             Qt::LeftToRight,

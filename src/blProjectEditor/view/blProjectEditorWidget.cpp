@@ -21,7 +21,7 @@ blProjectEditorWidget::blProjectEditorWidget(blProjectInfo *projectInfo, QWidget
     layout->addWidget(m_toolbar, 0, Qt::AlignTop);
 
     m_table = new blProjectEditorTableWidget(this);
-    layout->addWidget(m_table, 1, Qt::AlignCenter);
+    layout->addWidget(m_table, 1);
 
     m_footer = new blProjectEditorFooterWidget(this);
     layout->addWidget(m_footer, 0, Qt::AlignBottom);
@@ -40,4 +40,8 @@ blProjectEditorWidget::blProjectEditorWidget(blProjectInfo *projectInfo, QWidget
 
 void blProjectEditorWidget::setProjectInfo(blProjectInfo* projectInfo){
     m_toolbar->setProjectName(projectInfo->name());
+}
+
+blProjectEditorTableWidget* blProjectEditorWidget::table(){
+    return m_table;
 }

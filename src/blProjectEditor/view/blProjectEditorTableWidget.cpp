@@ -16,9 +16,38 @@ blProjectEditorTableWidget::blProjectEditorTableWidget(QWidget *parent) :
     QVBoxLayout *layout = new QVBoxLayout;
 
     layout->addWidget(this->emptyListWidget());
+
+
+    m_tableView = new QTableView(this);
+    layout->addWidget(m_tableView);
+
     this->setLayout(layout);
 
 }
+
+void blProjectEditorTableWidget::setContent(blProjectContent* content){
+
+    m_emptyTableWidget->setVisible(false);
+
+    QStandardItemModel *model = new QStandardItemModel(5, 3);
+    model->setHorizontalHeaderItem(0, this->getDataHeaderModel(content));
+    model->setItem(3, 1, new QStandardItem("Zéro !"));
+
+    m_tableView->resizeColumnsToContents();
+    m_tableView->resizeRowsToContents();
+    m_tableView->setModel(model);
+    m_tableView->setVisible(true);
+
+}
+
+QStandardItem* blProjectEditorTableWidget::getDataHeaderModel(blProjectContent* content){
+
+    QStandardItem* dataHeaderItem = new QStandardItem("Inputs");
+
+    return dataHeaderItem;
+
+}
+
 
 QWidget* blProjectEditorTableWidget::emptyListWidget(){
 

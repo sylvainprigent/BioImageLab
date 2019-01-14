@@ -34,7 +34,7 @@ void blProjectDatabase::connect(){
 
     // open
     if (m_db.open()){
-        qDebug() << "You are connected to the project database";
+        //qDebug() << "You are connected to the project database";
     }
     else{
         qDebug() << "Impossible to connect to the project database from file " + m_databaseFile;
@@ -45,8 +45,6 @@ void blProjectDatabase::connect(){
 
 // queries
 void blProjectDatabase::createDatabase(){
-
-    qDebug()<< "Project createdatabase begin";
 
     QString projectsTable =
             QString("CREATE TABLE IF NOT EXISTS projects (") +
@@ -63,14 +61,12 @@ void blProjectDatabase::createDatabase(){
     QSqlQuery query(m_db);
     query.prepare(projectsTable);
     if(!query.exec()){
-        qDebug() << "Cannot create the database";
+        qDebug() << "blProjectDatabase:: Cannot create the database";
     }
-    qDebug()<< "Project createdatabase end";
 }
 
 bool blProjectDatabase::addProject(blProjectInfo* projectInfo){
 
-    qDebug() << "add project begin";
     QSqlQuery query(m_db);
     query.prepare( QString( "INSERT INTO projects(name, description, id_type, url, created_date, modified_date)") +
                    QString( "VALUES (:name, :description, :id_type, :url, :created_date, :modified_date)") );
@@ -100,14 +96,12 @@ bool blProjectDatabase::addProject(blProjectInfo* projectInfo){
 }
 
 bool blProjectDatabase::editProject(blProjectInfo* projectInfo){
-    qDebug() << "edit project begin";
     if(projectInfo->id() == 0){
         return this->addProject(projectInfo);
     }
     else{
         return this->updateProject(projectInfo);
     }
-    qDebug() << "edit project end";
 }
 
 bool blProjectDatabase::updateProject(blProjectInfo* projectInfo){
@@ -205,35 +199,38 @@ void blProjectDatabase::viewDatabase(){
 
     QStringList tabl=m_db.tables();
     std::cout<< "Project database content :"<<std::endl;
-    for (int t=0 ; t<tabl.size() ; t++)
+    std::cout<< "--------------------------"<<std::endl;
+    for (int t = 0 ; t < tabl.size() ; t++)
     {
         this->viewTable(tabl.at(t));
         std::cout << std::endl;
     }
+    std::cout<< "--------------------------"<<std::endl;
 
 }
 
 void blProjectDatabase::viewTable(const QString tableName)
 {
-    qDebug() << "blProjectDatabase::ViewTable ";
-    // Fait la requete
+    //std::cout << "blProjectDatabase::ViewTable " << std::endl;
     QSqlQuery query(m_db);
     query.prepare("select * from "+tableName+" " );
     query.exec();
     QSqlRecord rec = query.record();
-    qDebug() << "Number of columns: " << rec.count();
+    //std::cout << "Number of columns: " << rec.count() << std::endl;
 
     std::cout << tableName.toStdString() << " : " << std::endl;
+    std::cout << "------------------------------" << std::endl;
     viewTableHeader(tableName, QString("horizontal") );
     while (query.next())
     {
-        for (int t=0 ; t<rec.count() ; t++)
+        for (int t = 0 ; t < rec.count() ; t++)
         {
-            std::cout<< (query.value(t).toString()).toStdString()<<"\t";
+            std::cout << (query.value(t).toString()).toStdString() << "\t|\t";
         }
         std::cout<< std::endl;
     }
-    std::cout << std::endl << std::endl;
+    std::cout << "------------------------------" << std::endl;
+    std::cout << std::endl;
 }
 
 void blProjectDatabase::viewTableHeader(const QString tableName, const QString orientation)
@@ -245,9 +242,9 @@ void blProjectDatabase::viewTableHeader(const QString tableName, const QString o
     {
         while (query.next())
         {
-            std::cout<< (query.value(1).toString()).toStdString()<<"\t";
+            std::cout << (query.value(1).toString()).toStdString() << "\t|\t";
         }
-        std::cout<<std::endl;
+        std::cout << std::endl;
     }
     else if (orientation==QString("vertical"))
     {
@@ -263,9 +260,11 @@ void blProjectDatabase::viewTablesList()
 {
     QStringList tabl=m_db.tables();
     std::cout<< "Tables are :"<<std::endl;
+    std::cout<< "------------"<<std::endl;
     for (int t=0 ; t<tabl.size() ; t++)
     {
         std::cout<< t << "- " << (tabl.at(t).toStdString())<<std::endl;
     }
+    std::cout<< "------------"<<std::endl;
 }
 

@@ -10,7 +10,10 @@
 
 #include "blProjectEditorExport.h"
 #include "blProjectCore/model/blProjectInfo.h"
-#include <QWidget>
+
+#include "blProjectEditor/model/blProjectContent.h"
+
+#include <QtWidgets>
 
 /// \class blProjectEditorTableWidget
 /// \brief Widget that shows the list of data
@@ -27,9 +30,16 @@ public:
 signals:
     void askImportData();
 
+public slots:
+    void setContent(blProjectContent* content);
+
 protected:
     QWidget* emptyListWidget();
 
 protected:
+    QStandardItem* getDataHeaderModel(blProjectContent* content);
+
+protected:
     QWidget* m_emptyTableWidget;
+    QTableView* m_tableView;
 };

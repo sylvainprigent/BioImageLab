@@ -26,6 +26,8 @@ SET(HEADERS_FILES
     view/blProjectEditorTagWidget.h
     view/blProjectEditorImportWidget.h
     model/blProjectTag.h
+    model/blProjectTagValue.h
+    model/blProjectContent.h
     model/blProjectData.h
     model/blProjectDataModel.h
     model/blProjectEditorDatabase.h
@@ -44,6 +46,8 @@ SET(SRCS_FILES
     view/blProjectEditorTagWidget.cpp
     view/blProjectEditorImportWidget.cpp
     model/blProjectTag.cpp
+    model/blProjectTagValue.cpp
+    model/blProjectContent.cpp
     model/blProjectData.cpp
     model/blProjectDataModel.cpp
     model/blProjectEditorDatabase.cpp

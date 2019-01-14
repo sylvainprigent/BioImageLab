@@ -33,10 +33,10 @@ void blProjectEditorDatabase::connect(){
 
     // open
     if (m_db.open()){
-        qDebug() << "You are connected to the project index";
+        //qDebug() << "You are connected to the blProjectEditorDatabase";
     }
     else{
-        qDebug() << "Impossible to connect to the project index from file " + m_databaseFile;
+        qDebug() << "Impossible to connect to the blProjectEditorDatabase from file " + m_databaseFile;
     }
 
     createDatabase();
@@ -146,7 +146,7 @@ blProjectTag* blProjectEditorDatabase::setTag(blProjectTag *tag){
     return tag;
 }
 
-QList<blProjectTag*> blProjectEditorDatabase::tags(){
+QList<blProjectTag*> blProjectEditorDatabase::getTags(){
     QList<blProjectTag*> tags;
     QSqlQuery query(m_db);
     query.prepare("SELECT * FROM blp_tags");
@@ -223,6 +223,20 @@ blProjectData* blProjectEditorDatabase::setData(blProjectData *data){
     return data;
 }
 
+QList<blProjectData*> blProjectEditorDatabase::getData(){
+    QList<blProjectData*> data;
+    QSqlQuery query(m_db);
+    query.prepare("SELECT * FROM blp_data");
+    query.exec();
+    while (query.next()){
+        blProjectData *dat = new blProjectData();
+        dat->setId(query.value(0).toInt());
+        dat->setUrl(query.value(1).toString());
+        data.append(dat);
+    }
+    return data;
+}
+
 bool blProjectEditorDatabase::isData(int id){
     QSqlQuery queryId(m_db);
     queryId.prepare("SELECT id FROM blp_data WHERE id=?");
@@ -237,41 +251,124 @@ bool blProjectEditorDatabase::isData(int id){
 }
 
 // ///////////////////////////////////////////////////// //
+//                    data tag
+// //////////////////////////////////////////////////// //
+void blProjectEditorDatabase::setDataTag(int id_data, int id_tag, QString value){
+    if (this->isDataTag(id_data, id_tag)){
+        QSqlQuery query(m_db);
+        query.prepare("UPDATE blp_data_tags SET value=? WHERE id_data=? AND id_tag=?");
+        query.addBindValue(value);
+        query.addBindValue(id_data);
+        query.addBindValue(id_tag);
+        query.exec();
+    }
+    else{
+        QSqlQuery query(m_db);
+        query.prepare( QString( "INSERT INTO blp_data_tags(id_data, id_tag, value)") +
+                       QString( "VALUES (:id_data, :id_tag, :value)") );
+        query.bindValue(":id_data", id_data);
+        query.bindValue(":id_tag", id_tag);
+        query.bindValue(":value", value);
+        query.exec();
+    }
+}
+
+blProjectTagValue *blProjectEditorDatabase::getDataTag(int id_data, int id_tag){
+
+    blProjectTagValue *tv = new blProjectTagValue();
+    tv->setIdData(id_data);
+    tv->setIdTag(id_tag);
+
+    QSqlQuery query(m_db);
+    query.prepare("SELECT * FROM blp_data_tags WHERE id_data=? AND id_tag=?");
+    query.addBindValue(id_data);
+    query.addBindValue(id_tag);
+    query.exec();
+    if (query.first()){
+        tv->setId(query.value(0).toInt());
+        tv->setIdData(query.value(1).toInt());
+        tv->setIdTag(query.value(2).toInt());
+        tv->setValue(query.value(3).toString());
+    }
+    return tv;
+}
+
+bool blProjectEditorDatabase::isDataTag(int id_data, int id_tag){
+    QSqlQuery queryId(m_db);
+    queryId.prepare("SELECT id FROM blp_data_tags WHERE id_data=? AND id_tag=?");
+    queryId.addBindValue(id_data);
+    queryId.addBindValue(id_tag);
+    queryId.exec();
+    if (queryId.first()){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
+// ///////////////////////////////////////////////////// //
+//                    Load Content
+// //////////////////////////////////////////////////// //
+blProjectContent* blProjectEditorDatabase::getContent(){
+
+    blProjectContent* content = new blProjectContent();
+
+    QList<blProjectTag*> tags = this->getTags();
+    content->setTags(tags);
+
+    QList<blProjectData*> data = this->getData();
+    content->setData(data);
+
+    for(int r = 0 ; r < data.count() ; r++){
+        for(int c = 0 ; c < tags.count() ; c++){
+            content->setDataTag(this->getDataTag(data[r]->id(), tags[c]->id()));
+        }
+    }
+
+    return content;
+
+}
+
+// ///////////////////////////////////////////////////// //
 //                    view table
 // //////////////////////////////////////////////////// //
 void blProjectEditorDatabase::viewDatabase(){
 
     QStringList tabl=m_db.tables();
-    std::cout<< "Project database content :"<<std::endl;
+    std::cout << "Project database content :" << std::endl;
+    std::cout << "--------------------------" << std::endl;
     for (int t=0 ; t<tabl.size() ; t++)
     {
         this->viewTable(tabl.at(t));
         std::cout << std::endl;
     }
-
+    std::cout << "--------------------------" << std::endl;
+    std::cout << std::endl;
 }
 
 void blProjectEditorDatabase::viewTable(const QString tableName)
 {
-    qDebug() << "blProjectDatabase::ViewTable ";
-    // Fait la requete
+    //std::cout << "blProjectEditorDatabase::ViewTable " << std::endl;
     QSqlQuery query(m_db);
-    query.prepare("select * from "+tableName+" " );
+    query.prepare("select * from " + tableName + " " );
     query.exec();
     QSqlRecord rec = query.record();
-    qDebug() << "Number of columns: " << rec.count();
+    //std::cout << "Number of columns: " << rec.count() << std::endl;
 
     std::cout << tableName.toStdString() << " : " << std::endl;
+    std::cout << "------------------------------" << std::endl;
     viewTableHeader(tableName, QString("horizontal") );
     while (query.next())
     {
-        for (int t=0 ; t<rec.count() ; t++)
+        for (int t = 0 ; t < rec.count() ; t++)
         {
-            std::cout<< (query.value(t).toString()).toStdString()<<"\t";
+            std::cout<< (query.value(t).toString()).toStdString() << "\t|\t";
         }
-        std::cout<< std::endl;
+        std::cout << std::endl;
     }
-    std::cout << std::endl << std::endl;
+    std::cout << "------------------------------" << std::endl;
+    std::cout << std::endl;
 }
 
 void blProjectEditorDatabase::viewTableHeader(const QString tableName, const QString orientation)
@@ -279,11 +376,11 @@ void blProjectEditorDatabase::viewTableHeader(const QString tableName, const QSt
     QSqlQuery query(m_db);
     query.prepare("PRAGMA table_info("+tableName+") ");
     query.exec();
-    if (orientation==QString("horizontal"))
+    if (orientation == QString("horizontal"))
     {
         while (query.next())
         {
-            std::cout<< (query.value(1).toString()).toStdString()<<"\t";
+            std::cout << (query.value(1).toString()).toStdString() << "\t|\t";
         }
         std::cout<<std::endl;
     }
@@ -291,18 +388,20 @@ void blProjectEditorDatabase::viewTableHeader(const QString tableName, const QSt
     {
         while (query.next())
         {
-            std::cout<< (query.value(1).toString()).toStdString()<<"\n";
+            std::cout << (query.value(1).toString()).toStdString()<<"\n";
         }
-        std::cout<<std::endl;
+        std::cout << std::endl;
     }
 }
 
 void blProjectEditorDatabase::viewTablesList()
 {
-    QStringList tabl=m_db.tables();
-    std::cout<< "Tables are :"<<std::endl;
+    QStringList tabl = m_db.tables();
+    std::cout<< "Tables are :" << std::endl;
+    std::cout<< "------------" << std::endl;
     for (int t=0 ; t<tabl.size() ; t++)
     {
-        std::cout<< t << "- " << (tabl.at(t).toStdString())<<std::endl;
+        std::cout << t << "- " << (tabl.at(t).toStdString()) << std::endl;
     }
+    std::cout<< "------------" << std::endl;
 }

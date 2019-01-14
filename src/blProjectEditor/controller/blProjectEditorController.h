@@ -40,6 +40,9 @@ signals:
 private:
     void createWidgets(blProjectInfo *projectInfo);
 
+public slots:
+    void loadContent();
+
 private slots:
     // project informations
     void showInfo();
